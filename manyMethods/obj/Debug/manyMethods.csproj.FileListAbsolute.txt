@@ -5,3 +5,10 @@ T:\C#-Projects\manyMethods\obj\Debug\manyMethods.csprojAssemblyReference.cache
 T:\C#-Projects\manyMethods\obj\Debug\manyMethods.csproj.CoreCompileInputs.cache
 T:\C#-Projects\manyMethods\obj\Debug\manyMethods.exe
 T:\C#-Projects\manyMethods\obj\Debug\manyMethods.pdb
+T:\LCA_CSharpDotNET\manyMethods\bin\Debug\manyMethods.exe.config
+T:\LCA_CSharpDotNET\manyMethods\bin\Debug\manyMethods.exe
+T:\LCA_CSharpDotNET\manyMethods\bin\Debug\manyMethods.pdb
+T:\LCA_CSharpDotNET\manyMethods\obj\Debug\manyMethods.csprojAssemblyReference.cache
+T:\LCA_CSharpDotNET\manyMethods\obj\Debug\manyMethods.csproj.CoreCompileInputs.cache
+T:\LCA_CSharpDotNET\manyMethods\obj\Debug\manyMethods.exe
+T:\LCA_CSharpDotNET\manyMethods\obj\Debug\manyMethods.pdb

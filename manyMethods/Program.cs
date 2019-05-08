@@ -11,7 +11,7 @@ namespace manyMethods
         static void Main(string[] args)
         {
             //Hello method
-            hello();
+            //hello();
 
             //Addition method
             //addition();
@@ -35,7 +35,7 @@ namespace manyMethods
             //date();
 
             //age method
-            //age();
+            age();
 
             //guess method
             //guess();
@@ -136,9 +136,9 @@ namespace manyMethods
             Console.WriteLine("Please enter your birthyear.");
             string input2 = Console.ReadLine();
             int inpt2 = int.Parse(input2);
-            string today = DateTime.Now.ToString("yyyy");
-            int year = int.Parse(today);
-            int age = year - inpt2;
+            int todayYear = DateTime.Now.Year;
+            //int year = int.Parse(today);
+            int age = todayYear - inpt2;
             Console.WriteLine("You are " + age + " years old!");
             Console.Read();
 
