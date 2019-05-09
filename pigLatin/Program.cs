@@ -28,24 +28,21 @@ namespace pigLatin
                 int yAsAVowel = input.IndexOfAny(charsy);
                 return input.Substring(yAsAVowel) + input.Substring(0, yAsAVowel) + "ay";
             }
-            else
+            else if(firstVowel == 0)
             {
-                if (firstVowel == 0)
+                bool lastLetterVowel = input.EndsWith("a") || input.EndsWith("e") || input.EndsWith("i") || input.EndsWith("o") || input.EndsWith("u");
+                if (lastLetterVowel == true)
                 {
-                    bool lastLetterVowel = input.EndsWith("a") || input.EndsWith("e") || input.EndsWith("i") || input.EndsWith("o") || input.EndsWith("u");
-                    if (lastLetterVowel == true)
-                    {
-                        return input.Substring(firstVowel) + input.Substring(0, firstVowel) + "yay";
-                    }
-                    else
-                    {
-                        return input.Substring(firstVowel) + input.Substring(0, firstVowel) + "ay";
-                    }
+                    return input.Substring(firstVowel) + input.Substring(0, firstVowel) + "yay";
                 }
                 else
                 {
                     return input.Substring(firstVowel) + input.Substring(0, firstVowel) + "ay";
                 }
+            }
+            else
+            {
+                return input.Substring(firstVowel) + input.Substring(0, firstVowel) + "ay";
             }
         }
     }
