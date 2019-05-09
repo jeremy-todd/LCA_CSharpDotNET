@@ -20,32 +20,33 @@ namespace pigLatin
 
         public static string pigLatin(string input)
         {
-            char[] chars = { 'a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U'};
+            char[] chars = { 'a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U' };
             int firstVowel = input.IndexOfAny(chars);
-            if(firstVowel == -1)
+            if (firstVowel == -1)
             {
                 char[] charsy = { 'y', 'Y' };
                 int yAsAVowel = input.IndexOfAny(charsy);
                 return input.Substring(yAsAVowel) + input.Substring(0, yAsAVowel) + "ay";
-            } else
+            }
+            else
             {
-                if(firstVowel == 0)
+                if (firstVowel == 0)
                 {
                     bool lastLetterVowel = input.EndsWith("a") || input.EndsWith("e") || input.EndsWith("i") || input.EndsWith("o") || input.EndsWith("u");
-                    if(lastLetterVowel == true) {
+                    if (lastLetterVowel == true)
+                    {
                         return input.Substring(firstVowel) + input.Substring(0, firstVowel) + "yay";
-                    } else
+                    }
+                    else
                     {
                         return input.Substring(firstVowel) + input.Substring(0, firstVowel) + "ay";
                     }
-                } else
+                }
+                else
                 {
                     return input.Substring(firstVowel) + input.Substring(0, firstVowel) + "ay";
                 }
             }
-
-            
-            Console.Read();
         }
     }
 }
