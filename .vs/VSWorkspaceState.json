@@ -1,8 +1,9 @@
 {
   "ExpandedNodes": [
     "",
-    "\\manyMethods"
+    "\\manyMethods",
+    "\\RockPaperScissors"
   ],
-  "SelectedNode": "\\manyMethods\\Program.cs",
+  "SelectedNode": "\\RockPaperScissors\\Program.cs",
   "PreviewInSolutionExplorer": false
 }
