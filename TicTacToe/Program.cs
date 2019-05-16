@@ -66,7 +66,7 @@ namespace TicTacToe
                 return false;
             }
         }
-
+        
         static bool isVerticalWin()
         {
             //Method to determine if there is a vertical win
