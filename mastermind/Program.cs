@@ -116,7 +116,6 @@ namespace mastermind
             {
                 return false;
             }
-
         }
     }
 }
