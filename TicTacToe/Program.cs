@@ -109,11 +109,6 @@ namespace TicTacToe
 
         static bool hasWon()
         {
-            //Method to determine if the current player has won
-            isHorizontalWin();
-            isVerticalWin();
-            isDiagonalWin();
-
             if (isHorizontalWin() == false && isVerticalWin() == false && isDiagonalWin() == false)
             {
                 return false;
@@ -121,8 +116,6 @@ namespace TicTacToe
             {
                 return true;
             }
-
-            isTie();
         }
 
         static bool isTie()

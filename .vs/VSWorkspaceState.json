@@ -2,8 +2,8 @@
   "ExpandedNodes": [
     "",
     "\\manyMethods",
-    "\\RockPaperScissors"
+    "\\TicTacToe"
   ],
-  "SelectedNode": "\\RockPaperScissors\\Program.cs",
+  "SelectedNode": "\\TicTacToe\\Program.cs",
   "PreviewInSolutionExplorer": false
 }
