@@ -41,7 +41,7 @@ namespace TicTacToe
             //Method to place a marker on the board.
             int inp = Convert.ToInt32(input);
             board[inp] = currentPlayer;
-            
+
             hasWon();
         }
 
