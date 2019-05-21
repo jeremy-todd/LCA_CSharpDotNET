@@ -8,24 +8,24 @@ namespace mastermind
     {
         static void Main(string[] args)
         {
+            Console.OutputEncoding = System.Text.Encoding.UTF8;
             Console.WriteLine("Welcome to Mastermind!");
             Console.WriteLine(" ");
             Console.WriteLine("Directions:");
-            Console.WriteLine("I have selected two random colors (Red, Yellow, or Blue) that can repeat.");
+            Console.WriteLine("I have selected four random colors (Blue, Green, Orange, Purple, Red, or Yellow) that can repeat.");
             Console.WriteLine("Try to guess the colors I have selected in the correct order.");
             Console.WriteLine("After each guess, I will let you know how you did using the following codes:");
-            Console.WriteLine("0-0 > Neither color is correct.");
-            Console.WriteLine("1-0 > One color is correct but not in the correct position.");
-            Console.WriteLine("1-1 > One color is correct and in the correct position.");
-            Console.WriteLine("2-0 > Both colors are correct but in the wrong positions.");
+            Console.WriteLine("\u25CB > The color is in the solution but in the wrong position.");
+            Console.WriteLine("\u25CF > The color is in the solution and in the correct position.");
+            Console.WriteLine("_ > The color is not in the solution.");
             Console.WriteLine(" ");
 
             Random generator = new Random();
             List<int> solution = new List<int>();
             int j = 0;
-            while (j < 2)
+            while (j < 4)
             {
-                solution.Add(generator.Next(0, 3));
+                solution.Add(generator.Next(0, 6));
                 ++j;
             }
 
@@ -33,7 +33,7 @@ namespace mastermind
 
             while (hasWon(userGuess, solution) == false)
             {
-                Console.WriteLine("Enter your guess(color color):");
+                Console.WriteLine("Enter your guess(color color color color):");
                 string userInput = Console.ReadLine();
                 string[] userColor = userInput.Split(' ');
                 int i = 0;
@@ -54,61 +54,82 @@ namespace mastermind
             List<int> userColor = new List<int>();
             foreach (string color in userGuess)
             {
-                if (color.ToLower() == "red")
+                if (color.ToLower() == "blue")
                 {
                     userColor.Add(0);
-                }
-                else if (color.ToLower() == "yellow")
+                } else if (color.ToLower() == "green")
                 {
                     userColor.Add(1);
-                } else if (color.ToLower() == "blue")
+                } else if (color.ToLower() == "orange")
                 {
                     userColor.Add(2);
+                } else if (color.ToLower() == "purple")
+                {
+                    userColor.Add(3);
+                } else if (color.ToLower() == "red")
+                {
+                    userColor.Add(4);
+                } else if (color.ToLower() == "yellow")
+                {
+                    userColor.Add(5);
                 }
             }
 
             if (userGuess.Count != 0)
             {
                 int l = 0;
-                int x = 0;
-                int y = 0;
-                
+                bool[] correct = new bool[4] { false, false, false, false };
+                string[] hint = new string[4];
+                                
                 while (l < userGuess.Count())
                 {
-                    int m = l + 1;
-                    int n = l - 1;
-                    if (l == 0)
+                    if (userColor[l] == solution[l])
                     {
-                        if (userColor[l] == solution[l]) //color and position are correct
-                        {
-                            ++y;
-                        }
-                        if (userColor[l] == solution[m]) //color is correct, position is not
-                        {
-                            ++x;
-                        }
+                        correct[l] = true;
+                        hint[l] = "\u25CF";
                     } else
                     {
-                        if (userColor[l] == solution[l]) //color and position are correct
+                        if (l == 0)
                         {
-                            ++y;
-                        }
-                        if (userColor[l] == solution[n]) //color is correct, position is not
+                            if (userColor[l] == solution[1] || userColor[l] == solution[2] || userColor[l] == solution[3])
+                            {
+                                hint[l] = "\u25CB";
+                            }
+                        } else if (l == 1)
                         {
-                            ++x;
+                            if (userColor[l] == solution[0] || userColor[l] == solution[2] || userColor[l] == solution[3])
+                            {
+                                hint[l] = "\u25CB";
+                            }
+                        } else if (l == 2)
+                        {
+                            if (userColor[l] == solution[0] || userColor[l] == solution[1] || userColor[l] == solution[3])
+                            {
+                                hint[l] = "\u25CB";
+                            }
+                        } else if (l == 3)
+                        {
+                            if (userColor[l] == solution[0] || userColor[l] == solution[1] || userColor[l] == solution[2])
+                            {
+                                hint[l] = "\u25CB";
+                            }
                         }
+                    }
+                    if (userColor[l] != solution[0] && userColor[l] != solution[1] && userColor[l] != solution[2] && userColor[l] != solution[3])
+                    {
+                        hint[l] = "_";
                     }
                     ++l;
                 }
                 
-                if (y == 2)
+                if (correct[0] == true && correct[1] == true && correct [2] == true && correct[3] == true)
                 {
                     return true;
                 }
                 else
                 {
                     Console.WriteLine(" ");
-                    Console.WriteLine("Your hint is: (" + x + ", " + y + ").");
+                    Console.WriteLine("[" + hint[0] + " " + hint[1] + " " + hint[2] + " " + hint[3] + "].");
                     Console.WriteLine(" ");
                     return false;
                 }
