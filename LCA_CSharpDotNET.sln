@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RockPaperScissors", "RockPa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TicTacToe", "TicTacToe\TicTacToe.csproj", "{014F20E4-4764-4A91-A094-0120B44FA6A6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "gradebook", "gradebook\gradebook.csproj", "{279E6993-9E91-4622-97EF-75F216E6C0C4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{014F20E4-4764-4A91-A094-0120B44FA6A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{014F20E4-4764-4A91-A094-0120B44FA6A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{014F20E4-4764-4A91-A094-0120B44FA6A6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{279E6993-9E91-4622-97EF-75F216E6C0C4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{279E6993-9E91-4622-97EF-75F216E6C0C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{279E6993-9E91-4622-97EF-75F216E6C0C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{279E6993-9E91-4622-97EF-75F216E6C0C4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
