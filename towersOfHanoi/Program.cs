@@ -116,11 +116,7 @@ namespace towersOfHanoi
                                     {
                                         int test1 = Convert.ToInt32(movingValue);
                                         int test2 = Convert.ToInt32(tempB[m-1]);
-                                        if (test1 > test2)
-                                        {
-                                            Console.WriteLine("");
-                                            Console.WriteLine("You cannot place a larger disc on top of a smaller disc.");
-                                        } else
+                                        if (test1 < test2)
                                         {
                                             tempA[l] = null;
                                             tempB[m] = movingValue;
@@ -160,12 +156,7 @@ namespace towersOfHanoi
                                     {
                                         int test1 = Convert.ToInt32(movingValue);
                                         int test2 = Convert.ToInt32(tempC[m - 1]);
-                                        if (test1 > test2)
-                                        {
-                                            Console.WriteLine("");
-                                            Console.WriteLine("You cannot place a larger disc on top of a smaller disc.");
-                                        }
-                                        else
+                                        if (test1 < test2)
                                         {
                                             tempA[l] = null;
                                             tempC[m] = movingValue;
@@ -205,12 +196,7 @@ namespace towersOfHanoi
                                     {
                                         int test1 = Convert.ToInt32(movingValue);
                                         int test2 = Convert.ToInt32(tempA[m - 1]);
-                                        if (test1 > test2)
-                                        {
-                                            Console.WriteLine("");
-                                            Console.WriteLine("You cannot place a larger disc on top of a smaller disc.");
-                                        }
-                                        else
+                                        if (test1 < test2)
                                         {
                                             tempB[l] = null;
                                             tempA[m] = movingValue;
@@ -250,12 +236,7 @@ namespace towersOfHanoi
                                     {
                                         int test1 = Convert.ToInt32(movingValue);
                                         int test2 = Convert.ToInt32(tempC[m - 1]);
-                                        if (test1 > test2)
-                                        {
-                                            Console.WriteLine("");
-                                            Console.WriteLine("You cannot place a larger disc on top of a smaller disc.");
-                                        }
-                                        else
+                                        if (test1 < test2)
                                         {
                                             tempB[l] = null;
                                             tempC[m] = movingValue;
@@ -295,12 +276,7 @@ namespace towersOfHanoi
                                     {
                                         int test1 = Convert.ToInt32(movingValue);
                                         int test2 = Convert.ToInt32(tempA[m - 1]);
-                                        if (test1 > test2)
-                                        {
-                                            Console.WriteLine("");
-                                            Console.WriteLine("You cannot place a larger disc on top of a smaller disc.");
-                                        }
-                                        else
+                                        if (test1 < test2)
                                         {
                                             tempC[l] = null;
                                             tempA[m] = movingValue;
@@ -340,12 +316,7 @@ namespace towersOfHanoi
                                     {
                                         int test1 = Convert.ToInt32(movingValue);
                                         int test2 = Convert.ToInt32(tempB[m - 1]);
-                                        if (test1 > test2)
-                                        {
-                                            Console.WriteLine("");
-                                            Console.WriteLine("You cannot place a larger disc on top of a smaller disc.");
-                                        }
-                                        else
+                                        if (test1 < test2)
                                         {
                                             tempC[l] = null;
                                             tempB[m] = movingValue;
