@@ -39,7 +39,7 @@ namespace towersOfHanoi
                 Console.WriteLine("");
                 Console.WriteLine("Which row do you want to move the top piece from?");
                 inputStart = Console.ReadLine().ToUpper();
-                Console.WriteLine("Which row do you want to move " + inputStart + " to?");
+                Console.WriteLine("Which row do you want to move the piece from " + inputStart + " to?");
                 inputEnd = Console.ReadLine().ToUpper();
             }
 
