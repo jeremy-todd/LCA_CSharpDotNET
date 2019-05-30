@@ -11,7 +11,8 @@ namespace towersOfHanoi_stack
         //Define global variables for use throughout the application
         public static Dictionary<string, Stack<int>> gameBoard = new Dictionary<string, Stack<int>>();
         public static string InputStart;
-        public static string InputEnd; public static int moves = 0;
+        public static string InputEnd;
+        public static int moves = 0;
         public static Stack<int> columnA = new Stack<int>();
         public static Stack<int> columnB = new Stack<int>();
         public static Stack<int> columnC = new Stack<int>();
