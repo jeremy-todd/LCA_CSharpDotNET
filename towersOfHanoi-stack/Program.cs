@@ -35,6 +35,9 @@ namespace towersOfHanoi_stack
             while (GameAction(InputStart, InputEnd) == false)
             {
                 PrintGameBoard();
+                //Print the number of moves the player has made so far
+                Console.WriteLine("Moves - " + moves);
+                Console.WriteLine("");
                 Console.WriteLine("Which row do you want to move the top piece from?");
                 InputStart = Console.ReadLine().ToUpper();
                 Console.WriteLine("Which row do you want to move the piece from " + InputStart + " to?");
@@ -70,9 +73,6 @@ namespace towersOfHanoi_stack
                 //Print the gameBoard on the Console
                 Console.WriteLine("{0}: {1}", column.Key[0], colLabel);
             }
-            Console.WriteLine("");
-            //Print the number of moves the player has made so far
-            Console.WriteLine("Moves - " + moves);
             Console.WriteLine("");
         }
 
