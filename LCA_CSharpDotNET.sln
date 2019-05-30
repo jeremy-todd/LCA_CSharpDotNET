@@ -21,7 +21,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PoCos", "PoCos\PoCos.csproj
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DailyPuzzles", "DailyPuzzles\DailyPuzzles.csproj", "{F47927EF-A7EC-422D-A1D5-62FF088814D2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "towersOfHanoi-stack", "towersOfHanoi-stack\towersOfHanoi-stack.csproj", "{77B63103-9790-4B6C-AF55-1CC4B10935AC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "towersOfHanoi-old", "towersOfHanoi-stack\towersOfHanoi-old.csproj", "{77B63103-9790-4B6C-AF55-1CC4B10935AC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
