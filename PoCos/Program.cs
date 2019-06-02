@@ -28,8 +28,8 @@ namespace PoCos
 
         public string getFullName()
         {
-            string fullName = FirstName + " " + LastName;
-            return fullName;
+            string FullName = First_Name + " " + Last_Name;
+            return FullName;
         }
     }
 

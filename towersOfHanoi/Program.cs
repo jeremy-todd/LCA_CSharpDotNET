@@ -1,54 +1,59 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.Concurrent;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace towersOfHanoi
+namespace towersOfHanoi_stack
 {
     class Program
     {
-        //Define global variable for use throughout the application
-        public static Dictionary<string, string[]> gameBoard = new Dictionary<string, string[]>();
-        public static string inputStart;
-        public static string inputEnd;
-        public static string movingValue;
+        //Define global variables for use throughout the application
+        public static Dictionary<string, Stack<int>> gameBoard = new Dictionary<string, Stack<int>>();
+        public static string InputStart;
+        public static string InputEnd;
         public static int moves = 0;
-        public static string[] solution = new string[4] { "4", "3", "2", "1" };
+        public static Stack<int> columnA = new Stack<int>();
+        public static Stack<int> columnB = new Stack<int>();
+        public static Stack<int> columnC = new Stack<int>();
+
         static void Main(string[] args)
         {
+            //Add starting values to columnA
+            int i = 4;
+            while (i > 0)
+            {
+                columnA.Push(i);
+                --i;
+            }
+
             //Defining starting point of dictionary gameBoard
-            gameBoard.Add("A", new string[4] { "4", "3", "2", "1" });
-            gameBoard.Add("B", new string[4]);
-            gameBoard.Add("C", new string[4]);
+            gameBoard.Add("A", columnA);
+            gameBoard.Add("B", columnB);
+            gameBoard.Add("C", columnC);
 
             //Loop to repeat so long as the player has not solved the Towers of Hanoi
-            while (gameAction(inputStart, inputEnd) == false)
+            while (GameAction(InputStart, InputEnd) == false)
             {
-                Console.WriteLine("Welcome to Towers of Hanoi!");
-                Console.WriteLine("");
-                Console.WriteLine("Directions:");
-                Console.WriteLine("Move all of the disks from A to C one at a time.");
-                Console.WriteLine("You cannot place a larger disk on top of a smaller disk.");
-                Console.WriteLine("Good luck!");
-                Console.WriteLine("");
-                //Print the current status of the Towers of Hanoi
-                foreach (KeyValuePair<string, string[]> column in gameBoard)
-                {
-                    Console.WriteLine("{0}: {1}  {2}  {3}  {4}", column.Key, column.Value[0], column.Value[1], column.Value[2], column.Value[3]);
-                }
-                Console.WriteLine("");
+                PrintGameBoard();
                 //Print the number of moves the player has made so far
                 Console.WriteLine("Moves - " + moves);
                 Console.WriteLine("");
                 Console.WriteLine("Which row do you want to move the top piece from?");
-                inputStart = Console.ReadLine().ToUpper();
-                Console.WriteLine("Which row do you want to move the piece from " + inputStart + " to?");
-                inputEnd = Console.ReadLine().ToUpper();
+                InputStart = Console.ReadLine().ToUpper();
+                Console.WriteLine("Which row do you want to move the piece from " + InputStart + " to?");
+                InputEnd = Console.ReadLine().ToUpper();
             }
 
             //Code to print once the player has solved the Towers of Hanoi
+            PrintGameBoard();
+            //Print the number of moves the player has made so far
+            Console.WriteLine("You solved Towers of Hanoi in " + moves + " moves!");
+            Console.Read();
+        }
+
+        public static void PrintGameBoard()
+        {
             Console.WriteLine("Welcome to Towers of Hanoi!");
             Console.WriteLine("");
             Console.WriteLine("Directions:");
@@ -57,385 +62,82 @@ namespace towersOfHanoi
             Console.WriteLine("Good luck!");
             Console.WriteLine("");
             //Print the current status of the Towers of Hanoi
-            foreach (KeyValuePair<string, string[]> column in gameBoard)
+            foreach (KeyValuePair<string, Stack<int>> column in gameBoard)
             {
-                Console.WriteLine("{0}: {1}  {2}  {3}  {4}", column.Key, column.Value[0], column.Value[1], column.Value[2], column.Value[3]);
+                //Create a variable to populate with the values of each stack.
+                string colLabel = string.Empty;
+                //Loop through each stack and add the values to colLabel.
+                foreach (int disk in column.Value.Reverse())
+                {
+                    colLabel += disk + " ";
+                }
+                //Print the gameBoard on the Console
+                Console.WriteLine("{0}: {1}", column.Key[0], colLabel);
             }
             Console.WriteLine("");
-            Console.WriteLine("You took " + moves + " moves to solve the Towers of Hanoi!");
-            Console.Read();
         }
 
-        public static bool gameAction(string inputStart, string inputEnd)
+        public static bool GameAction(string InputStart, string InputEnd)
         {
             //if the player has entered a value for inputStart
-            if (inputStart != null)
+            if (InputStart != null)
             {
-                //Create temporary arrays used to move the disks around the board.
-                string[] tempA = new string[4];
-                string[] tempB = new string[4];
-                string[] tempC = new string[4];
+                //Create a variable that determines if the player entered the same column for start and end
+                bool sameColumn = false;
 
-                //Populate the temporary arrays to the current status of the Towers of Hanoi
-                foreach (KeyValuePair<string, string[]> column in gameBoard)
+                if (InputStart == InputEnd)
                 {
-                    if (column.Key == "A")
-                    {
-                        int i = 0;
-                        while (i < column.Value.Length)
-                        {
-                            tempA[i] = column.Value[i];
-                            ++i;
-                        }
-                    }
-                    else if (column.Key == "B")
-                    {
-                        int j = 0;
-                        while (j < column.Value.Length)
-                        {
-                            tempB[j] = column.Value[j];
-                            ++j;
-                        }
-                    }
-                    else if (column.Key == "C")
-                    {
-                        int k = 0;
-                        while (k < column.Value.Length)
-                        {
-                            tempC[k] = column.Value[k];
-                            ++k;
-                        }
-                    }
+                    sameColumn = true;
                 }
 
-                //Process the players moves
-                if (inputStart == "A" && inputEnd == "B")
+                if (sameColumn == false) //Process this code if the origination column and destination column are not the same.
                 {
-                    //Checking which disk is in the top position in the origination column
-                    int l = 3;
-                    while (l >= 0)
+                    if (ValidMove(InputStart, InputEnd) == true) //Call the method ValidMove and pass the columnStart and columnEnd
                     {
-                        if (tempA[l] != null)
+                        if (gameBoard[InputStart].Count() != 0) //What to do if the origination column is not empty - Do nothing if it is empty.
                         {
-                            //Setting the temporary variable movingValue to the top most disk in the user chosen column
-                            movingValue = tempA[l];
-                            //Checking for the first available slot in the destination column
-                            int m = 0;
-                            while (m < 4)
-                            {
-                                if (tempB[m] == null)
-                                {
-                                    //Checking to make sure the move is valid. Only need to check if the first available slot is not slot 0.
-                                    if (m > 0)
-                                    {
-                                        //Convert the disk values to strings for comparison
-                                        int test1 = Convert.ToInt32(movingValue);
-                                        int test2 = Convert.ToInt32(tempB[m-1]);
-                                        //Check if the movingValue is smaller than the disk below it
-                                        if (test1 < test2)
-                                        {
-                                            tempA[l] = null;
-                                            tempB[m] = movingValue;
-                                        }
-                                    }
-                                    else //If slot 0 is available, no need to check if the lower disk is larger than the moving disk.
-                                    {
-                                        tempA[l] = null;
-                                        tempB[m] = movingValue;
-                                    }
-                                    //Break the loop if we have an available slot for the movingValue
-                                    break;
-                                }
-                                //Advance to the next slot in the destination column.
-                                ++m;
-                            }
-                            //Break the loop if we have idenitified the top most disk in the origination column
-                            break;
-                        }
-                        else
-                        {
-                            //If we have not found the top most disk in the origination column, go to the next location down
-                            --l;
+                            gameBoard[InputEnd].Push(gameBoard[InputStart].Pop());
                         }
                     }
                 }
-                else if (inputStart == "A" && inputEnd == "C")
-                {
-                    //Checking which disk is in the top position in the origination column
-                    int l = 3;
-                    while (l >= 0)
-                    {
-                        if (tempA[l] != null)
-                        {
-                            //Setting the temporary variable movingValue to the top most disk in the user chosen column
-                            movingValue = tempA[l];
+            }
 
-                            //Checking for the first available slot in the destination column
-                            int m = 0;
-                            while (m < 4)
-                            {
-                                if (tempC[m] == null)
-                                {
-                                    //Checking to make sure the move is valid. Only need to check if the first available slot is not slot 0.
-                                    if (m > 0)
-                                    {
-                                        //Convert the disk values to strings for comparison
-                                        int test1 = Convert.ToInt32(movingValue);
-                                        int test2 = Convert.ToInt32(tempC[m - 1]);
-                                        //Check if the movingValue is smaller than the disk below it
-                                        if (test1 < test2)
-                                        {
-                                            tempA[l] = null;
-                                            tempC[m] = movingValue;
-                                        }
-                                    }
-                                    else //If slot 0 is available, no need to check if the lower disk is larger than the moving disk.
-                                    {
-                                        tempA[l] = null;
-                                        tempC[m] = movingValue;
-                                    }
-                                    //Break the loop if we have an available slot for the movingValue
-                                    break;
-                                }
-                                //Advance to the next slot in the destination column.
-                                ++m;
-                            }
-                            //Break the loop if we have idenitified the top most disk in the origination column
-                            break;
-                        }
-                        else
-                        {
-                            //If we have not found the top most disk in the origination column, go to the next location down
-                            --l;
-                        }
-                    }
-                }
-                else if (inputStart == "B" && inputEnd == "A")
+            Console.Clear(); //Clear the console so that the console does not get super cluttered
+            return GameWon(); //Call GameWon method and return the result.
+        }
+
+        public static bool ValidMove(string InputStart, string InputEnd) //Return if the move is valid (true) or not (false)
+        {
+            if (gameBoard[InputStart].Count() != 0 && gameBoard[InputEnd].Count() != 0) //What to do if both origination and destination columns are not empty - do nothing if both are empty.
+            {
+                ++moves; //Add a move to the player's tally
+
+                if (gameBoard[InputStart].Peek() < gameBoard[InputEnd].Peek()) //Check to make sure the disk being moved is smaller than the disk it is going on top of.
                 {
-                    //Checking which disk is in the top position in the origination column
-                    int l = 3;
-                    while (l >= 0)
-                    {
-                        if (tempB[l] != null)
-                        {
-                            //Setting the temporary variable movingValue to the top most disk in the user chosen column
-                            movingValue = tempB[l];
-                            //Checking for the first available slot in the destination column
-                            int m = 0;
-                            while (m < 4)
-                            {
-                                if (tempA[m] == null)
-                                {
-                                    //Checking to make sure the move is valid. Only need to check if the first available slot is not slot 0.
-                                    if (m > 0)
-                                    {
-                                        //Convert the disk values to strings for comparison
-                                        int test1 = Convert.ToInt32(movingValue);
-                                        int test2 = Convert.ToInt32(tempA[m - 1]);
-                                        //Check if the movingValue is smaller than the disk below it
-                                        if (test1 < test2)
-                                        {
-                                            tempB[l] = null;
-                                            tempA[m] = movingValue;
-                                        }
-                                    }
-                                    else //If slot 0 is available, no need to check if the lower disk is larger than the moving disk.
-                                    {
-                                        tempB[l] = null;
-                                        tempA[m] = movingValue;
-                                    }
-                                    //Break the loop if we have an available slot for the movingValue
-                                    break;
-                                }
-                                //Advance to the next slot in the destination column.
-                                ++m;
-                            }
-                            //Break the loop if we have idenitified the top most disk in the origination column
-                            break;
-                            break;
-                        }
-                        else
-                        {
-                            //If we have not found the top most disk in the origination column, go to the next location down
-                            --l;
-                        }
-                    }
+                    return true; //Disk being moved is smaller than the disk it is going on top of. Valid move.
                 }
-                else if (inputStart == "B" && inputEnd == "C")
+                else
                 {
-                    int l = 3;
-                    while (l >= 0)
-                    {
-                        if (tempB[l] != null)
-                        {
-                            //Setting the temporary variable movingValue to the top most disk in the user chosen column
-                            movingValue = tempB[l];
-                            //Checking for the first available slot in the destination column
-                            int m = 0;
-                            while (m < 4)
-                            {
-                                if (tempC[m] == null)
-                                {
-                                    //Checking to make sure the move is valid. Only need to check if the first available slot is not slot 0.
-                                    if (m > 0)
-                                    {
-                                        //Convert the disk values to strings for comparison
-                                        int test1 = Convert.ToInt32(movingValue);
-                                        int test2 = Convert.ToInt32(tempC[m - 1]);
-                                        //Check if the movingValue is smaller than the disk below it
-                                        if (test1 < test2)
-                                        {
-                                            tempB[l] = null;
-                                            tempC[m] = movingValue;
-                                        }
-                                    }
-                                    else //If slot 0 is available, no need to check if the lower disk is larger than the moving disk.
-                                    {
-                                        tempB[l] = null;
-                                        tempC[m] = movingValue;
-                                    }
-                                    //Break the loop if we have an available slot for the movingValue
-                                    break;
-                                }
-                                //Advance to the next slot in the destination column.
-                                ++m;
-                            }
-                            //Break the loop if we have idenitified the top most disk in the origination column
-                            break;
-                            break;
-                        }
-                        else
-                        {
-                            //If we have not found the top most disk in the origination column, go to the next location down
-                            --l;
-                        }
-                    }
-                }
-                else if (inputStart == "C" && inputEnd == "A")
-                {
-                    //Checking which disk is in the top position in the origination column
-                    int l = 3;
-                    while (l >= 0)
-                    {
-                        if (tempC[l] != null)
-                        {
-                            //Setting the temporary variable movingValue to the top most disk in the user chosen column
-                            movingValue = tempC[l];
-                            //Checking for the first available slot in the destination column
-                            int m = 0;
-                            while (m < 4)
-                            {
-                                if (tempA[m] == null)
-                                {
-                                    //Checking to make sure the move is valid. Only need to check if the first available slot is not slot 0.
-                                    if (m > 0)
-                                    {
-                                        //Convert the disk values to strings for comparison
-                                        int test1 = Convert.ToInt32(movingValue);
-                                        int test2 = Convert.ToInt32(tempA[m - 1]);
-                                        //Check if the movingValue is smaller than the disk below it
-                                        if (test1 < test2)
-                                        {
-                                            tempC[l] = null;
-                                            tempA[m] = movingValue;
-                                        }
-                                    }
-                                    else //If slot 0 is available, no need to check if the lower disk is larger than the moving disk.
-                                    {
-                                        tempC[l] = null;
-                                        tempA[m] = movingValue;
-                                    }
-                                    //Break the loop if we have an available slot for the movingValue
-                                    break;
-                                }
-                                //Advance to the next slot in the destination column.
-                                ++m;
-                            }
-                            //Break the loop if we have idenitified the top most disk in the origination column
-                            break;
-                            break;
-                        }
-                        else
-                        {
-                            //If we have not found the top most disk in the origination column, go to the next location down
-                            --l;
-                        }
-                    }
-                }
-                else if (inputStart == "C" && inputEnd == "B")
-                {
-                    int l = 3;
-                    while (l >= 0)
-                    {
-                        if (tempC[l] != null)
-                        {
-                            //Setting the temporary variable movingValue to the top most disk in the user chosen column
-                            movingValue = tempC[l];
-                            //Checking for the first available slot in the destination column
-                            int m = 0;
-                            while (m < 4)
-                            {
-                                if (tempB[m] == null)
-                                {
-                                    //Checking to make sure the move is valid. Only need to check if the first available slot is not slot 0.
-                                    if (m > 0)
-                                    {
-                                        //Convert the disk values to strings for comparison
-                                        int test1 = Convert.ToInt32(movingValue);
-                                        int test2 = Convert.ToInt32(tempB[m - 1]);
-                                        //Check if the movingValue is smaller than the disk below it
-                                        if (test1 < test2)
-                                        {
-                                            tempC[l] = null;
-                                            tempB[m] = movingValue;
-                                        }
-                                    }
-                                    else //If slot 0 is available, no need to check if the lower disk is larger than the moving disk.
-                                    {
-                                        tempC[l] = null;
-                                        tempB[m] = movingValue;
-                                    }
-                                    //Break the loop if we have an available slot for the movingValue
-                                    break;
-                                }
-                                //Advance to the next slot in the destination column.
-                                ++m;
-                            }
-                            //Break the loop if we have idenitified the top most disk in the origination column
-                            break;
-                            break;
-                        }
-                        else
-                        {
-                            //If we have not found the top most disk in the origination column, go to the next location down
-                            --l;
-                        }
-                    }
+                    return false; //Disk being moved is larger than the disk it is going on top of. Invalid move.
                 }
 
-                //Set the gameBoard arrays to equal the temporary arrays
-                gameBoard["A"] = tempA;
-                gameBoard["B"] = tempB;
-                gameBoard["C"] = tempC;
-                //Increment the number of moves the player has made
-                ++moves;
-                //Clear the console so that the console does not get super cluttered
-                Console.Clear();
+            }
+            else //What do if the destination column is empty
+            {
+                ++moves; //Add a move to the player's tally.
+                return true; //The destination column is empty. Valid move.
+            }
+        }
 
-                //Check to see if we have a winner by comparing tempC with the solution
-                if (tempC.SequenceEqual(solution) == true ) {
-                    //If tempC and solution match, we have a winner
-                    return true;
-                } else
-                {
-                    //If tempC and solution do not match, we do not have a winner
-                    return false;
-                }
+        public static bool GameWon() //Return if the player has solved Towers of Hanoi (true) or not (false). 
+        {
+            if (gameBoard["C"].Count() == 4) //Check the count of column C
+            {
+                return true; //Player has solved the Towers of Hanoi because the count is 4.
             }
             else
             {
-                //Player has not made a move yet so we do not have a winner
-                return false;
+                return false; //Player has not solved the Towers of Hanoi because the count is not 4.
             }
         }
     }
