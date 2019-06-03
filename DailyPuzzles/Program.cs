@@ -10,14 +10,31 @@ namespace DailyPuzzles
     {
         static void Main(string[] args)
         {
-            int[] unsortedScores = new int[] { 37, 89, 41, 65, 91, 53 };
+            #region SortScore
+            /*int[] unsortedScores = new int[] { 37, 89, 41, 65, 91, 53 };
             Console.WriteLine("Unsorted Scores:");
             Console.WriteLine("[{0}]", string.Join(", ", unsortedScores));
             sortScores(unsortedScores);
             Console.WriteLine("");
             Console.WriteLine("Scores Sorted Descending:");
             Console.WriteLine("[{0}]", string.Join(", ", unsortedScores));
+            Console.Read();*/
+            #endregion
+
+            #region Reverse Array + Duplicate Array
+            int[] NewArray = new int[] { 1, 2, 3, 4, 5 };
+            int[] NewerArray = new int[] { 1, 2, 3, 4, 5 };
+            Console.WriteLine("Original Array:");
+            Console.WriteLine("[{0}]", string.Join(", ", NewArray));
+            Console.WriteLine("");
+            Console.WriteLine("Original Array Reversed:");
+            Console.WriteLine("[{0}]", string.Join(", ", ReverseArray(NewArray)));
+            Console.WriteLine("");
+            Console.WriteLine("Original Array Duplicated:");
+            Console.WriteLine("[{0}]", string.Join(", ", DuplicateArray(NewerArray)));
             Console.Read();
+
+            #endregion
         }
 
         public static int[] sortScores(int[] unsortedScores)
@@ -45,6 +62,31 @@ namespace DailyPuzzles
             }
 
             return unsortedScores;
+        }
+
+        public static int[] ReverseArray(int[] NewArray)
+        {
+            Array.Reverse( NewArray );
+            
+            return NewArray;
+        }
+
+        public static int[] DuplicateArray(int[] NewerArray)
+        {
+            int[] DuplicatedArray = new int[NewerArray.Length * 2];
+            int i = 0;
+            while (i < NewerArray.Length) {
+                DuplicatedArray[i] = NewerArray[i];
+                ++i;
+            }
+            int j = 0;
+            while (j < NewerArray.Length)
+            {
+                int ArrayPosition = j + NewerArray.Length;
+                DuplicatedArray[ArrayPosition] = NewerArray[j];
+                ++j;
+            }
+            return DuplicatedArray;
         }
     }
 }

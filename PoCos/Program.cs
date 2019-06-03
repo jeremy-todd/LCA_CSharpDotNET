@@ -21,14 +21,14 @@ namespace PoCos
         public string Gender { get; set; }
         public string DriverLicenseNumber { get; set; }
 
-        public DriverLicense(string First_Name, string Last_Name, string GenderMF, string Driver_License_Number)
+        public DriverLicense(string First_Name, string Last_Name, string Gender, string Driver_License_Number)
         {
             
         }
 
         public string getFullName()
         {
-            string FullName = First_Name + " " + Last_Name;
+            string FullName = FirstName + " " + LastName;
             return FullName;
         }
     }
