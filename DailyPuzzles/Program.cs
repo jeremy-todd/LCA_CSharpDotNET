@@ -66,9 +66,23 @@ namespace DailyPuzzles
 
         public static int[] ReverseArray(int[] NewArray)
         {
-            Array.Reverse( NewArray );
+            //Easy way
+            /*Array.Reverse( NewArray );
             
-            return NewArray;
+            return NewArray;*/
+
+            //Hard way
+            int i = NewArray.Length - 1;
+            int j = 0;
+            int[] reversedArray = new int[NewArray.Length];
+            while (i >= 0)
+            {
+                reversedArray[j] = NewArray[i];
+                --i;
+                ++j;
+            }
+
+            return reversedArray;
         }
 
         public static int[] DuplicateArray(int[] NewerArray)
@@ -86,6 +100,7 @@ namespace DailyPuzzles
                 DuplicatedArray[ArrayPosition] = NewerArray[j];
                 ++j;
             }
+
             return DuplicatedArray;
         }
     }
