@@ -25,6 +25,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "towersOfHanoi-old", "towers
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToDoItems", "ToDoItems\ToDoItems.csproj", "{634F76D5-5E0D-48B4-92C9-D8052D96F115}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Points", "Points\Points.csproj", "{62277E26-28D6-4210-A215-7D2E08A1DF61}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuperHeroesAndVillians", "SuperHeroesAndVillians\SuperHeroesAndVillians.csproj", "{8B271CB6-2A60-4EA5-A776-1A3FDE97BE11}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -75,6 +79,14 @@ Global
 		{634F76D5-5E0D-48B4-92C9-D8052D96F115}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{634F76D5-5E0D-48B4-92C9-D8052D96F115}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{634F76D5-5E0D-48B4-92C9-D8052D96F115}.Release|Any CPU.Build.0 = Release|Any CPU
+		{62277E26-28D6-4210-A215-7D2E08A1DF61}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{62277E26-28D6-4210-A215-7D2E08A1DF61}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{62277E26-28D6-4210-A215-7D2E08A1DF61}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{62277E26-28D6-4210-A215-7D2E08A1DF61}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8B271CB6-2A60-4EA5-A776-1A3FDE97BE11}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8B271CB6-2A60-4EA5-A776-1A3FDE97BE11}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8B271CB6-2A60-4EA5-A776-1A3FDE97BE11}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8B271CB6-2A60-4EA5-A776-1A3FDE97BE11}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

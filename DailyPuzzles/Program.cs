@@ -22,7 +22,7 @@ namespace DailyPuzzles
             #endregion
 
             #region Reverse Array + Duplicate Array
-            int[] NewArray = new int[] { 1, 2, 3, 4, 5 };
+            /*int[] NewArray = new int[] { 1, 2, 3, 4, 5 };
             int[] NewerArray = new int[] { 1, 2, 3, 4, 5 };
             Console.WriteLine("Original Array:");
             Console.WriteLine("[{0}]", string.Join(", ", NewArray));
@@ -32,8 +32,25 @@ namespace DailyPuzzles
             Console.WriteLine("");
             Console.WriteLine("Original Array Duplicated:");
             Console.WriteLine("[{0}]", string.Join(", ", DuplicateArray(NewerArray)));
-            Console.Read();
+            Console.Read();*/
+            #endregion
 
+            #region Array Work Week 5 Day 1
+            int[] myArray = new int[5] { 1, 5, 10, 4, 2 };
+            int num1 = 2;
+            int num2 = 5;
+            Console.WriteLine("Array:");
+            Console.WriteLine("[{0}]", string.Join(", ", myArray));
+            Console.WriteLine("");
+            Console.WriteLine("Array values raised by the power of 2 and sum of all numbers evenly divisible by 4:");
+            Console.WriteLine("{0}", Prompt1(myArray));
+            Console.WriteLine("");
+            Console.WriteLine("add(2, 5):");
+            Console.WriteLine("{0}", Prompt2a(num1, num2));
+            Console.WriteLine("");
+            Console.WriteLine("add(2)(5):");
+            Console.WriteLine("{0}", Prompt2b(num1, num2));
+            Console.Read();
             #endregion
         }
 
@@ -102,6 +119,42 @@ namespace DailyPuzzles
             }
 
             return DuplicatedArray;
+        }
+
+        public static int Prompt1(int[] myArray)
+        {
+            int[] myArraySquared = new int[myArray.Length];
+            int ArraySum = 0;
+            int i = 0;
+            int j = 0;
+            while(i < myArray.Length)
+            {
+                int myArrayValue = myArray[i];
+                myArraySquared[i] = myArray[i] * myArrayValue;
+                ++i;
+            }
+            while(j < myArraySquared.Length)
+            {
+                if(myArraySquared[j]%4 == 0)
+                {
+                    ArraySum += myArraySquared[j];
+                }
+                ++j;
+            }
+            return ArraySum;
+        }
+
+        public static int Prompt2a(int num1, int num2)
+        {
+            int totalA;
+            totalA = num1 + num2;
+            return totalA;
+        }
+
+        public static int Prompt2b(int num1, int num2)
+        {
+            int totalB = 0;
+            return totalB;
         }
     }
 }
