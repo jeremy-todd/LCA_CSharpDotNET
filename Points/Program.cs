@@ -70,13 +70,13 @@ namespace Points
             return "(" + X + ", " + Y + ")";
         }
 
-        public override bool Equals(Object obj)
+        public override bool Equals(Object o)
         {
             //Something goes here. Need to ask about it.
 
             return true;
             
-            /*if (this == obj)
+            /*if (this == o)
             {
                 return true;
             }

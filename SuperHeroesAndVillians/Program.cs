@@ -30,8 +30,10 @@ namespace SuperHeroesAndVillians
                 {
                     Console.WriteLine("What is your super power?");
                     string superpower = Console.ReadLine().ToLower();
-                    string realname = nameInput;
-                    SuperHero Human = new SuperHero(realname, superpower);
+                    Console.WriteLine("What is your real name (alter ego)?");
+                    string realname = Console.ReadLine();
+                    string name = nameInput;
+                    SuperHero Human = new SuperHero(name, realname, superpower);
                     ListHuman.Add(Human);
                 }
                 else if(personType == "villian")
@@ -82,8 +84,9 @@ namespace SuperHeroesAndVillians
         public string RealName { get; set; }
         public string SuperPower { get; set; }
 
-        public SuperHero(string realname, string superpower):base(Name,NickName)
+        public SuperHero(string name, string realname, string superpower):base(Name,NickName)
         {
+            Name = name;
             RealName = realname;
             SuperPower = superpower;
             //NickName = null;
@@ -91,12 +94,12 @@ namespace SuperHeroesAndVillians
 
         public override string ToString()
         {
-            return "I am " + RealName + "! My super power is " + SuperPower + "!";
+            return "I am " + RealName + ". When I am " + Name + ", my super power is " + SuperPower + "!";
         }
 
         public override string PrintGreeting()
         {
-            return "I am " + RealName + "! My super power is " + SuperPower + "!";
+            return "I am " + RealName + ". When I am " + Name + ", my super power is " + SuperPower + "!";
         }
     }
 
