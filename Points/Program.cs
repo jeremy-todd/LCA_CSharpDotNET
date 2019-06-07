@@ -70,20 +70,20 @@ namespace Points
             return "(" + X + ", " + Y + ")";
         }
 
-        public override bool Equals(Object o)
+        public bool Equals(Point2D o)
         {
             //Something goes here. Need to ask about it.
 
-            return true;
+            //return true;
             
-            /*if (this == o)
+            if (this.X == o.X && this.Y == o.Y)
             {
                 return true;
             }
             else
             {
                 return false;
-            }*/
+            }
         }
     }
 
@@ -110,20 +110,20 @@ namespace Points
             return "(" + X + ", " + Y + ", " + Z + ")";
         }
 
-        public override bool Equals(Object obj)
+        public bool Equals(Point3D o)
         {
             //Something goes here. Need to ask about it.
 
-            return true;
+            //return true;
 
-            /*if (this == obj)
+            if (this.X == o.X && this.Y == o.Y && this.Z == o.Z)
             {
                 return true;
             }
             else
             {
                 return false;
-            }*/
+            }
         }
     }
 }
