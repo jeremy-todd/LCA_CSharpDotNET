@@ -25,11 +25,7 @@ namespace SuperHeroesAndVillians
                     string nickname = Console.ReadLine();
                     string name = nameInput;
                     Human = new Person(name, nickname);
-                    ListHuman.Add(Human);
-                    foreach(object averageperson in ListHuman)
-                    {
-                        Console.WriteLine(averageperson);
-                    }
+                    ListHuman.Add(Human.PrintGreeting());
                 }
                 else if(personType == "super hero")
                 {
@@ -64,8 +60,8 @@ namespace SuperHeroesAndVillians
 
     class Person
     {
-        public static string Name { get; set; }
-        public static string NickName { get; set; }
+        public string Name { get; set; }
+        public string NickName { get; set; }
 
         public Person(string name, string nickname)
         {
@@ -80,10 +76,10 @@ namespace SuperHeroesAndVillians
 
         public override string ToString()
         {
-            return "Hi, my name is " + Name + ", you can call me " + NickName + ".";
+            return Name;
         }
 
-        public virtual string PrintGreeting()
+        public string PrintGreeting()
         {
             return "Hi, my name is " + Name + ", you can call me " + NickName + ".";
         }
@@ -94,19 +90,19 @@ namespace SuperHeroesAndVillians
         public string RealName { get; set; }
         public string SuperPower { get; set; }
 
-        public SuperHero(string name, string realname, string superpower):base(Name,NickName)
+        public SuperHero(string name, string realname, string superpower):base(name,null)
         {
             Name = name;
             RealName = realname;
             SuperPower = superpower;
         }
 
-        public override string ToString()
+        /*public override string ToString()
         {
             return "I am " + RealName + ". When I am " + Name + ", my super power is " + SuperPower + "!";
-        }
+        }*/
 
-        public override string PrintGreeting()
+        public new string PrintGreeting()
         {
             return "I am " + RealName + ". When I am " + Name + ", my super power is " + SuperPower + "!";
         }
@@ -117,18 +113,18 @@ namespace SuperHeroesAndVillians
         public string NameVillian { get; set; }
         public string Nemesis { get; set; }
 
-        public Villian(string name, string nemesis):base(Name,NickName)
+        public Villian(string name, string nemesis):base(name,null)
         {
             NameVillian = name;
             Nemesis = nemesis;
         }
 
-        public override string ToString()
+        /*public override string ToString()
         {
             return "I am " + NameVillian + "! Have you seen " + Nemesis + "?";
-        }
+        }*/
 
-        public override string PrintGreeting()
+        public new string PrintGreeting()
         {
             return "I am " + NameVillian + "! Have you seen " + Nemesis + "?";
         }
