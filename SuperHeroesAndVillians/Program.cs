@@ -18,7 +18,6 @@ namespace SuperHeroesAndVillians
                 string personType = Console.ReadLine().ToLower();
                 Console.WriteLine("What is your name?");
                 string nameInput = Console.ReadLine();
-                Person Human = new Person();
                 if(personType == "average person")
                 {
                     Console.WriteLine("What is your nickname?");
@@ -51,7 +50,7 @@ namespace SuperHeroesAndVillians
             }
             foreach(Person human in ListHuman)
             {
-                human.PrintGreeting();
+                Console.WriteLine(human.PrintGreeting());
             }
             Console.Read();
         }
@@ -66,11 +65,6 @@ namespace SuperHeroesAndVillians
         {
             Name = name;
             NickName = nickname;
-        }
-
-        public Person()
-        {
-
         }
 
         public override string ToString()
