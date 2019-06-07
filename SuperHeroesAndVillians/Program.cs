@@ -25,7 +25,7 @@ namespace SuperHeroesAndVillians
                     string nickname = Console.ReadLine();
                     string name = nameInput;
                     Human = new Person(name, nickname);
-                    ListHuman.Add(Human.PrintGreeting());
+                    ListHuman.Add(Human);
                 }
                 else if(personType == "super hero")
                 {
@@ -49,10 +49,9 @@ namespace SuperHeroesAndVillians
                 Done = Console.ReadLine().ToLower();
                 Console.Clear();
             }
-            foreach(object human in ListHuman)
+            foreach(Person human in ListHuman)
             {
-                //Super Heroes and Villians work fine. average person overwrites existing information. Not sure how to fix this.
-                Console.WriteLine(human);
+                human.PrintGreeting();
             }
             Console.Read();
         }
@@ -79,7 +78,7 @@ namespace SuperHeroesAndVillians
             return Name;
         }
 
-        public string PrintGreeting()
+        public virtual string PrintGreeting()
         {
             return "Hi, my name is " + Name + ", you can call me " + NickName + ".";
         }
@@ -97,12 +96,7 @@ namespace SuperHeroesAndVillians
             SuperPower = superpower;
         }
 
-        /*public override string ToString()
-        {
-            return "I am " + RealName + ". When I am " + Name + ", my super power is " + SuperPower + "!";
-        }*/
-
-        public new string PrintGreeting()
+        public override string PrintGreeting()
         {
             return "I am " + RealName + ". When I am " + Name + ", my super power is " + SuperPower + "!";
         }
@@ -119,12 +113,7 @@ namespace SuperHeroesAndVillians
             Nemesis = nemesis;
         }
 
-        /*public override string ToString()
-        {
-            return "I am " + NameVillian + "! Have you seen " + Nemesis + "?";
-        }*/
-
-        public new string PrintGreeting()
+        public override string PrintGreeting()
         {
             return "I am " + NameVillian + "! Have you seen " + Nemesis + "?";
         }
