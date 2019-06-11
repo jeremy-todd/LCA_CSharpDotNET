@@ -10,30 +10,51 @@ namespace CarLot
     {
         static void Main(string[] args)
         {
+            CarLot MallParking = new CarLot();
+            Truck F150 = new Truck()
+            {
+                BedSize = 5,
+                LicenseNumber = "G1ZBG",
+                Make = "Ford",
+                Model = "F-150",
+                Price = 40000
+            };
+            MallParking.AddCar(F150);
+            Car Elantra = new Car()
+            {
+                Doors = 4,
+                LicenseNumber = "HG63TV",
+                Make = "Hyundai",
+                Model = "Elantra",
+                Price = 24000,
+                Type = "Sedan"
+            };
+            MallParking.PrintInventory();
         }
     }
 
     class CarLot
     {
         public string Name { get; set; }
-        public List<string> ListCars { get; set; }
+        public List<Vehicle> ListCars { get; set; }
 
         public CarLot()
         {
             
         }
 
-        public virtual void AddCar()
+        public virtual void AddCar(Truck F150)
         {
-            ListCars.Add(Name);
+            ListCars.Add(F150);
         }
 
         public virtual void PrintInventory()
         {
-            foreach (string car in ListCars)
+            foreach (Vehicle car in ListCars)
             {
                 Console.WriteLine(car);
             }
+            Console.Read();
         }
     }
 
@@ -60,7 +81,7 @@ namespace CarLot
 
     class Truck : Vehicle
     {
-        public string BedSize { get; set; }
+        public int BedSize { get; set; }
 
         public Truck()
         {

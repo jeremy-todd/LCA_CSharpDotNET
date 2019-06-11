@@ -72,10 +72,6 @@ namespace Points
 
         public bool Equals(Point2D o)
         {
-            //Something goes here. Need to ask about it.
-
-            //return true;
-            
             if (this.X == o.X && this.Y == o.Y)
             {
                 return true;
@@ -112,10 +108,6 @@ namespace Points
 
         public bool Equals(Point3D o)
         {
-            //Something goes here. Need to ask about it.
-
-            //return true;
-
             if (this.X == o.X && this.Y == o.Y && this.Z == o.Z)
             {
                 return true;

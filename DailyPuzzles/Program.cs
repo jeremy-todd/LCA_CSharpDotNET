@@ -49,7 +49,7 @@ namespace DailyPuzzles
             Console.WriteLine("{0}", Prompt2a(num1, num2));
             Console.WriteLine("");
             Console.WriteLine("add(2)(5):");
-            Console.WriteLine("{0}", Prompt2b(num1, num2));
+            Console.WriteLine("{0}", Prompt2b(num1)(num2));
             Console.Read();
             #endregion
         }
@@ -151,10 +151,9 @@ namespace DailyPuzzles
             return totalA;
         }
 
-        public static int Prompt2b(int num1, int num2)
+        public static Func<int, int> Prompt2b(int num1)
         {
-            int totalB = 0;
-            return totalB;
+            return num2 => num1 + num2;
         }
     }
 }
