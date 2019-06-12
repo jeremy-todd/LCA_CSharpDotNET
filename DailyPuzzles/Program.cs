@@ -36,7 +36,7 @@ namespace DailyPuzzles
             #endregion
 
             #region Array Work Week 5 Day 1
-            int[] myArray = new int[5] { 1, 5, 10, 4, 2 };
+            /*int[] myArray = new int[5] { 1, 5, 10, 4, 2 };
             int num1 = 2;
             int num2 = 5;
             Console.WriteLine("Array:");
@@ -50,6 +50,13 @@ namespace DailyPuzzles
             Console.WriteLine("");
             Console.WriteLine("add(2)(5):");
             Console.WriteLine("{0}", Prompt2b(num1)(num2));
+            Console.Read();*/
+            #endregion
+
+            #region Palindrome Check Week 5 Day 2
+            string word1 = "racecar";
+            //string word1 = "racer";
+            Console.WriteLine(word1 + " is a palindrome - " + PalindromeCheck(word1) + ".");
             Console.Read();
             #endregion
         }
@@ -154,6 +161,34 @@ namespace DailyPuzzles
         public static Func<int, int> Prompt2b(int num1)
         {
             return num2 => num1 + num2;
+        }
+
+        public static bool PalindromeCheck(string word1)
+        {
+            char[] wordArray = word1.ToCharArray();
+            int WordLength = wordArray.Length;
+            int i = 0;
+            int j = WordLength - 1;
+            string frontEnd = "";
+            string backEnd = "";
+            while (i < WordLength/2)
+            {
+                frontEnd += wordArray[i];
+                ++i;
+            }
+            while (j > WordLength/2)
+            {
+                backEnd += wordArray[j];
+                --j;
+            }
+            if (frontEnd == backEnd)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }
