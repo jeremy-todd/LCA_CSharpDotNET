@@ -54,9 +54,16 @@ namespace DailyPuzzles
             #endregion
 
             #region Palindrome Check Week 5 Day 2
-            string word1 = "racecar";
+            /*string word1 = "racecar";
             //string word1 = "racer";
             Console.WriteLine(word1 + " is a palindrome - " + PalindromeCheck(word1) + ".");
+            Console.Read();*/
+            #endregion
+
+            #region  Array Work Week 6 Day 1
+            int[] myArray = new int[] {0,1,0,3,12};
+            w6d1Prompt1(myArray);
+            Console.WriteLine("[{0}]", string.Join(", ", myArray));
             Console.Read();
             #endregion
         }
@@ -188,6 +195,21 @@ namespace DailyPuzzles
             else
             {
                 return false;
+            }
+        }
+
+        public static int[] w6d1Prompt1(int[] myArray)
+        {
+            int count = 0;
+            int length = myArray.Length;
+            int[] adjustedArray = new int[length];
+
+            for (int i = 0; i < length; i++)
+            {
+                if (myArray[i] != 0)
+                {
+                    adjustedArray[count++] = myArray[i];
+                }
             }
         }
     }

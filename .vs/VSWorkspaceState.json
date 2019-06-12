@@ -1,9 +1,9 @@
 {
   "ExpandedNodes": [
     "",
-    "\\manyMethods",
-    "\\TicTacToe"
+    "\\DailyPuzzles",
+    "\\SuperHeroesAndVillians"
   ],
-  "SelectedNode": "\\LCA_CSharpDotNET.sln",
+  "SelectedNode": "\\DailyPuzzles\\Program.cs",
   "PreviewInSolutionExplorer": false
 }
