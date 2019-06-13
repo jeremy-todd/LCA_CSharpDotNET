@@ -8,7 +8,7 @@ namespace CarLot
 {
     class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
             CarLot C1 = new CarLot("C-1");
             CarLot R7 = new CarLot("R-7");
