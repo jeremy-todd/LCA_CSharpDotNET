@@ -12,12 +12,12 @@ namespace CarLot
         {
             CarLot C1 = new CarLot("C-1");
             CarLot R7 = new CarLot("R-7");
-            Vehicle F150 = new Truck("G1ZBG", "Ford", "F-150", 40000, 5);
-            Vehicle Elantra = new Car("HG63TV", "Hyundai", "Elantra", 24000, "Sedan", 4);
-            C1.AddCar(F150, Elantra);
-            Vehicle Tundra = new Truck("LBK-3399", "Toyota", "Tundra", 45000, 6);
-            Vehicle Corvette = new Car("NCM-5453", "Chevrolet", "Corvette", 65000, "Coupe", 2);
-            R7.AddCar(Tundra, Corvette);
+            Vehicle car1 = new Truck("G1ZBG", "Ford", "F-150", 40000, 5);
+            Vehicle car2 = new Car("HG63TV", "Hyundai", "Elantra", 24000, "Sedan", 4);
+            C1.AddCar(car1, car2);
+            Vehicle car3 = new Truck("LBK-3399", "Toyota", "Tundra", 45000, 6);
+            Vehicle car4 = new Car("NCM-5453", "Chevrolet", "Corvette", 65000, "Coupe", 2);
+            R7.AddCar(car3, car4);
             C1.PrintInventory();
             Console.WriteLine(" ");
             R7.PrintInventory();
@@ -39,10 +39,10 @@ namespace CarLot
        public List<Vehicle> ListCars = new List<Vehicle>();
 
        //methods
-       public virtual void AddCar(Vehicle F150, Vehicle Elantra)
+       public virtual void AddCar(Vehicle car1, Vehicle car2)
        {
-           ListCars.Add(F150);
-           ListCars.Add(Elantra);
+           ListCars.Add(car1);
+           ListCars.Add(car2);
        }
 
        public virtual void PrintInventory()

@@ -54,16 +54,22 @@ namespace DailyPuzzles
             #endregion
 
             #region Palindrome Check Week 5 Day 2
-            /*string word1 = "racecar";
-            //string word1 = "racer";
-            Console.WriteLine(word1 + " is a palindrome - " + PalindromeCheck(word1) + ".");
+            /*List<string> words = new List<string>() { "racecar", "abba", "racer", "jeremy", "csharp", "repaper", "tattarrattat" };
+            foreach(string word in words)
+            {
+                Console.WriteLine(word + " is a palindrome - " + PalindromeCheck(word) + ".");
+            }
             Console.Read();*/
             #endregion
 
             #region  Array Work Week 6 Day 1
-            int[] myArray = new int[] {0,1,0,3,12};
-            w6d1Prompt1(myArray);
-            Console.WriteLine("[{0}]", string.Join(", ", myArray));
+            int[] myArray = new int[] {0,1,0,3,12}; //[1,3,12,0,0]
+            int[] myOtherArray = new int[] { 39, 20, 6, 49, 17, 86, 8, 24, 67 }; //316
+            Console.WriteLine("myArray with all 0s moved to the end of the array:");
+            Console.WriteLine("[{0}]", string.Join(", ", W6d1Prompt1(myArray)));
+            Console.WriteLine("");
+            Console.WriteLine("myOtherArray values summed:");
+            Console.WriteLine(W6d1Prompt2(myOtherArray));
             Console.Read();
             #endregion
         }
@@ -170,23 +176,33 @@ namespace DailyPuzzles
             return num2 => num1 + num2;
         }
 
-        public static bool PalindromeCheck(string word1)
+        public static bool PalindromeCheck(string word)
         {
-            char[] wordArray = word1.ToCharArray();
+            char[] wordArray = word.ToLower().ToCharArray();
             int WordLength = wordArray.Length;
             int i = 0;
             int j = WordLength - 1;
             string frontEnd = "";
             string backEnd = "";
-            while (i < WordLength/2)
+            while (i < WordLength / 2)
             {
                 frontEnd += wordArray[i];
                 ++i;
             }
-            while (j > WordLength/2)
+            if((WordLength/2)%2==0)
             {
-                backEnd += wordArray[j];
-                --j;
+                while (j >= WordLength / 2)
+                {
+                    backEnd += wordArray[j];
+                    --j;
+                }
+            } else
+            {
+                while (j > WordLength / 2)
+                {
+                    backEnd += wordArray[j];
+                    --j;
+                }
             }
             if (frontEnd == backEnd)
             {
@@ -198,7 +214,7 @@ namespace DailyPuzzles
             }
         }
 
-        public static int[] w6d1Prompt1(int[] myArray)
+        public static int[] W6d1Prompt1(int[] myArray)
         {
             int count = 0;
             int length = myArray.Length;
@@ -211,6 +227,22 @@ namespace DailyPuzzles
                     adjustedArray[count++] = myArray[i];
                 }
             }
+            while (count < length)
+            {
+                adjustedArray[count++] = 0;
+            }
+
+            return adjustedArray;
+        }
+
+        public static int W6d1Prompt2(int[] myOtherArray)
+        {
+            int SumArray = 0;
+            for (int i = 0; i < myOtherArray.Length; i++)
+            {
+                SumArray += myOtherArray[i];
+            }
+            return SumArray;
         }
     }
 }
