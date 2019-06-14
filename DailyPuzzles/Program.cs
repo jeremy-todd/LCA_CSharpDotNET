@@ -63,13 +63,30 @@ namespace DailyPuzzles
             #endregion
 
             #region  Array Work Week 6 Day 1
-            int[] myArray = new int[] {0,1,0,3,12}; //[1,3,12,0,0]
+            /*int[] myArray = new int[] {0,1,0,3,12}; //[1,3,12,0,0]
             int[] myOtherArray = new int[] { 39, 20, 6, 49, 17, 86, 8, 24, 67 }; //316
             Console.WriteLine("myArray with all 0s moved to the end of the array:");
             Console.WriteLine("[{0}]", string.Join(", ", W6d1Prompt1(myArray)));
             Console.WriteLine("");
             Console.WriteLine("myOtherArray values summed:");
             Console.WriteLine(W6d1Prompt2(myOtherArray));
+            Console.Read();*/
+            #endregion
+
+            #region Week 6 Day 2
+            int[] unsortedArray = new int[] { 37, 89, 41, 65, 91, 53, 14, 25, 115 }; //[14, 25, 37, 41, 53, 65, 89, 91, 115]
+            int[] maxValueArray = new int[] {95366, 75793, 59383, 50481, 38032, 91835, 57007, 323, 101254, 8567}; //101254
+            Console.WriteLine("Unsorted Array:");
+            Console.WriteLine("[{0}]", string.Join(", ", unsortedArray));
+            Console.WriteLine("");
+            Console.WriteLine("Sorted Array:");
+            Console.WriteLine("[{0}]", string.Join(", ", W6d2BubbleSort(unsortedArray)));
+            Console.WriteLine("");
+            Console.WriteLine("Max Value Array:");
+            Console.WriteLine("[{0}]", string.Join(", ", maxValueArray));
+            Console.WriteLine("");
+            Console.WriteLine("Max Value of Max Value Array");
+            Console.WriteLine(W6d2MaxValue(maxValueArray));
             Console.Read();
             #endregion
         }
@@ -243,6 +260,47 @@ namespace DailyPuzzles
                 SumArray += myOtherArray[i];
             }
             return SumArray;
+        }
+
+        public static int[] W6d2BubbleSort(int[] unsortedArray)
+        {
+            int smallerOne;
+            int length = unsortedArray.Length - 1;
+            bool done = false;
+
+            while (done == false) {
+                int changes = 0;
+                for (int i = 0; i < length; i++)
+                {
+                    if (unsortedArray[i] > unsortedArray[i + 1])
+                    {
+                        smallerOne = unsortedArray[i];
+                        unsortedArray[i] = unsortedArray[i + 1];
+                        unsortedArray[i + 1] = smallerOne;
+                        ++changes;
+                    }
+                }
+                if (changes == 0)
+                {
+                    done = true;
+                }
+            }
+
+            return unsortedArray;
+        }
+
+        public static int W6d2MaxValue(int[] maxValueArray)
+        {
+            int maxValue = 0;
+            int length = maxValueArray.Length;
+            for (int i = 0; i < length; i++)
+            {
+                if(maxValue < maxValueArray[i])
+                {
+                    maxValue = maxValueArray[i];
+                }
+            }
+            return maxValue;
         }
     }
 }

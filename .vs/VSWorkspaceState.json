@@ -1,9 +1,9 @@
 {
   "ExpandedNodes": [
     "",
-    "\\DailyPuzzles",
-    "\\SuperHeroesAndVillians"
+    "\\CarLot",
+    "\\Checkers"
   ],
-  "SelectedNode": "\\DailyPuzzles\\Program.cs",
+  "SelectedNode": "\\Checkers\\Checkers.csproj",
   "PreviewInSolutionExplorer": false
 }
