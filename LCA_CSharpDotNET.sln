@@ -33,6 +33,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarLot", "CarLot\CarLot.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Inventory", "Inventory\Inventory.csproj", "{A40045C2-5B9D-4FE6-A34D-A3DAD9443BC7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Checkers", "Checkers\Checkers.csproj", "{7062F89A-30AA-4C48-A2F0-AAC53BE4D74E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -99,6 +101,10 @@ Global
 		{A40045C2-5B9D-4FE6-A34D-A3DAD9443BC7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A40045C2-5B9D-4FE6-A34D-A3DAD9443BC7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A40045C2-5B9D-4FE6-A34D-A3DAD9443BC7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7062F89A-30AA-4C48-A2F0-AAC53BE4D74E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7062F89A-30AA-4C48-A2F0-AAC53BE4D74E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7062F89A-30AA-4C48-A2F0-AAC53BE4D74E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7062F89A-30AA-4C48-A2F0-AAC53BE4D74E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

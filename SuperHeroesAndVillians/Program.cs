@@ -85,7 +85,6 @@ namespace SuperHeroesAndVillians
 
         public SuperHero(string name, string realname, string superpower):base(name,null)
         {
-            Name = name;
             RealName = realname;
             SuperPower = superpower;
         }
@@ -103,13 +102,12 @@ namespace SuperHeroesAndVillians
 
         public Villian(string name, string nemesis):base(name,null)
         {
-            NameVillian = name;
             Nemesis = nemesis;
         }
 
         public override string PrintGreeting()
         {
-            return "I am " + NameVillian + "! Have you seen " + Nemesis + "?";
+            return "I am " + Name + "! Have you seen " + Nemesis + "?";
         }
     }
 }
