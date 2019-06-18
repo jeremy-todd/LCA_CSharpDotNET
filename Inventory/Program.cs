@@ -10,9 +10,9 @@ namespace Inventory
     {
         static void Main(string[] args)
         {
-            IRentable JetSki = new Boat("jet ski");
-            IRentable MtnCabin = new House("mountain cabin");
-            IRentable Maserati = new Car("Maserati");
+            Boat JetSki = new Boat("jet ski");
+            House MtnCabin = new House("mountain cabin");
+            Car Maserati = new Car("Maserati");
             List<IRentable> Rentals = new List<IRentable>() { JetSki, MtnCabin, Maserati };
             foreach(IRentable rental in Rentals)
             {

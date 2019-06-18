@@ -33,7 +33,7 @@ namespace SuperHeroesAndVillians
                     Console.WriteLine("What is your real name (alter ego)?");
                     string realname = Console.ReadLine();
                     string name = nameInput;
-                    Person Human = new SuperHero(name, realname, superpower);
+                    SuperHero Human = new SuperHero(name, realname, superpower);
                     ListHuman.Add(Human);
                 }
                 else if(personType == "villian")
@@ -41,7 +41,7 @@ namespace SuperHeroesAndVillians
                     Console.WriteLine("Who is your nemesis?");
                     string nemesis = Console.ReadLine();
                     string name = nameInput;
-                    Person Human = new Villian(name, nemesis);
+                    Villian Human = new Villian(name, nemesis);
                     ListHuman.Add(Human);
                 }
                 Console.WriteLine("Add another? (y/n)");
