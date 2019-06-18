@@ -10,10 +10,10 @@ namespace Inventory
     {
         static void Main(string[] args)
         {
-            IRentable JetSki = new Boat("JetSki", 2, 35);
-            IRentable Cabin = new House("Cabin", 5, 250);
-            IRentable Maserati = new Car("Maserati", 2, 275);
-            List<IRentable> Rentals = new List<IRentable>() { JetSki, Cabin, Maserati };
+            IRentable JetSki = new Boat("jet ski");
+            IRentable MtnCabin = new House("mountain cabin");
+            IRentable Maserati = new Car("Maserati");
+            List<IRentable> Rentals = new List<IRentable>() { JetSki, MtnCabin, Maserati };
             foreach(IRentable rental in Rentals)
             {
                 Console.WriteLine(rental.GetDescription());
@@ -24,7 +24,7 @@ namespace Inventory
 
     public interface IRentable
     {
-        string GetDailyRates();
+        decimal GetDailyRates();
 
         string GetDescription();
     }
@@ -32,69 +32,66 @@ namespace Inventory
     public class Boat : IRentable
     {
         public string Desc {get; set;}
-        public int Seats { get; set; }
-        public int HourlyRate { get; set; }
+        public decimal HourlyRate { get; }
 
-        public Boat(string desc, int seats, int hourlyrate)
+        public Boat(string desc)
         {
             Desc = desc;
-            Seats = seats;
-            HourlyRate = hourlyrate;
+            HourlyRate = 27.34m;
         }
-        public string GetDailyRates()
+        public decimal GetDailyRates()
         {
-            return "This is the Boat GetDailyRate() method.";
+            decimal DailyRate = HourlyRate * 24m;
+            return DailyRate;
         }
 
        public string GetDescription()
         {
-            return "The " + Desc + " seats " + Seats + " and costs $" + HourlyRate + " per hour.";
+            return "The " + Desc + " is a boat that costs $" + string.Format("{0:F2}", GetDailyRates()) + " per day.";
         }
     }
 
     public class House : IRentable
     {
         public string Desc { get; set; }
-        public int Rooms { get; set; }
-        public int WeeklyRate { get; set; }
+        public decimal WeeklyRate { get; }
 
-        public House(string desc, int rooms, int weeklyrate)
+        public House(string desc)
         {
             Desc = desc;
-            Rooms = rooms;
-            WeeklyRate = weeklyrate;
+            WeeklyRate = 1054.72m;
         }
-        public string GetDailyRates()
+        public decimal GetDailyRates()
         {
-            return "This is the House GetDailyRate() method.";
+            decimal DailyRate = WeeklyRate / 7m;
+            return DailyRate;
         }
 
         public string GetDescription()
         {
-            return "The " + Desc + " has " + Rooms + " rooms and costs $" + WeeklyRate + " per week.";
+            return "The " + Desc + " is a cabin that costs $" + string.Format("{0:F2}", GetDailyRates()) + " per day.";
         }
     }
 
     public class Car : IRentable
     {
         public string Desc { get; set; }
-        public int Seats { get; set; }
-        public int DailyRate { get; set; }
+        public decimal Daily_Rate { get; }
 
-        public Car(string desc, int seats, int dailyrate)
+        public Car(string desc)
         {
             Desc = desc;
-            Seats = seats;
-            DailyRate = dailyrate;
+            Daily_Rate = 48.93m;
         }
-        public string GetDailyRates()
+        public decimal GetDailyRates()
         {
-            return "This is the Car GetDailyRate() method.";
+            decimal DailyRate = Daily_Rate;
+            return DailyRate;
         }
 
         public string GetDescription()
         {
-            return "The " + Desc + " seats " + Seats + " and costs $" + DailyRate + " per day.";
+            return "The " + Desc + " is a car that costs $" + string.Format("{0:F2}", GetDailyRates()) + " per day.";
         }
     }
 }

@@ -12,6 +12,8 @@ namespace Checkers
         {
             Game game = new Game();
             game.Start();
+            game.DrawBoard();
+            Console.Read();
         }
     }
 
