@@ -10,7 +10,9 @@ namespace Checkers
     {
         static void Main(string[] args)
         {
-            Game game = new Game();
+            Console.OutputEncoding = System.Text.Encoding.UTF8;
+            Checkers.Game game = new Game();
+            //game.CheckerStartingPoint();
             game.Start();
             game.DrawBoard();
             Console.Read();
@@ -23,8 +25,8 @@ namespace Checkers
         public int Col {get; private set;}
         public Position (int row, int col)
     	{
-            this.Row = row;
-            this.Col = col;
+            Row = row;
+            Col = col;
 	    }
     }
 
@@ -41,14 +43,17 @@ namespace Checkers
         {
             if(team == Color.White)
             {
-                Symbol = "25CF"; //open circle
-                Team = Color.White;
+                int symbol = int.Parse("25CF", System.Globalization.NumberStyles.HexNumber); //open circle
+                Symbol = char.ConvertFromUtf32(symbol);
+                Team = Color.Black;
             }
             else
             {
-                Symbol = "25CB"; //filled circle
+                int symbol = int.Parse("25CB", System.Globalization.NumberStyles.HexNumber); //closed circle
+                Symbol = char.ConvertFromUtf32(symbol);
                 Team = Color.Black;
             }
+            Position = new Position(row, col);
         }
     }
     #endregion
@@ -56,25 +61,28 @@ namespace Checkers
     #region Class Board
     public class Board
     {
-        public List<Checker> checkers;
+        public List<Checker> checkers {get; private set;}
+        
+        #region Constructors
         public Board()
         {
             checkers = new List<Checker>();
             for (int r = 0; r < 3; r++)
             {
-                for (int i =0; i < 8; i++) //Adding starting white checkers to the game board
+                for (int i = 0; i < 8; i += 2)
                 {
-                    Checker c = new Checker(Color.White, r, (r + 1) % 2 + i);
-                    checkers.Add(c);
+                    // the first three rows are for White checkers (row = 0,1,2)
+                    // the last three rows are for Black checkers (row = 5,6,7)
+                    Checker cw = new Checker(Color.White, r, (r + 1) % 2 + i);
+                    Checker cb = new Checker(Color.Black, (r + 5), (r) % 2 + i);
+                    checkers.Add(cw);
+                    checkers.Add(cb);
                 }
-                for (int i = 0; i < 8; i += 2) //Adding starting black checkers to the game board
-                {
-                    Checker c = new Checker(Color.Black, 5 + r, (r) % 2 + i);
-                    checkers.Add(c);
-                }
-            } 
+            }
         }
+        #endregion
 
+        #region Methods
         public Checker GetChecker(Position pos)
         {
             ///TODO: Use LINQ to implement this function
@@ -97,24 +105,26 @@ namespace Checkers
             ///TODO: what if checker == null?
         }
 
-        public void MoveChecker(Checker checker, Position pos)
+        public void MoveChecker(Checker checker, Position destination)
         {
-            Checker c = new Checker(checker.Team, pos.Row, pos.Col);
+            Checker c = new Checker(checker.Team, destination.Row, destination.Col);
             checkers.Add(c);
-            RemoveChecker(checker);
+            checkers.Remove(checker);
         }
+        #endregion
     }
     #endregion
 
     #region Class Game
     public class Game
     {
-        private Board board;
+        public Board board;
         public Game()
         {
-            this.board = new Board();
+            board = new Board();
         }
 
+        #region Methods
         private bool CheckForWin()
         {
             return board.checkers.All(x => x.Team == Color.White) || board.checkers.All(x => x.Team == Color.Black);
@@ -123,11 +133,12 @@ namespace Checkers
         public void Start()
         {
             DrawBoard();
-            while(!CheckForWin())
+            while(CheckForWin())
             {
                 this.ProcessInput();
             }
             Console.WriteLine("You won!");
+            Console.WriteLine("Press any key to exit.");
             Console.Read();
         }
 
@@ -179,7 +190,7 @@ namespace Checkers
             //5. Now we need to make sure the moving direction and length
             if (rowDistance == 2)
             {
-                if (IsCapture(player, src, dest))
+                if (IsCapture(src, dest))
                 {
                     return true;
                 }
@@ -194,23 +205,25 @@ namespace Checkers
             }
         }
 
-        public bool IsCapture(Color player, Position src, Position dest)
+        public bool IsCapture(Position src, Position dest)
         {
             int RowDistance = Math.Abs(dest.Row - src.Row);
             int ColDistance = Math.Abs(dest.Col - src.Col);
             if(RowDistance == 2 && ColDistance == 2)
             {
+                //there must be a piece in the middle of the source and the destination
                 int row_mid = (dest.Row + src.Row) / 2;
                 int col_mid = (dest.Col + src.Col) / 2;
                 Position p = new Position(row_mid, col_mid);
                 Checker c = board.GetChecker(p);
+                Checker player = board.GetChecker(src);
                 if (c == null)
                 {
                     return false;
                 }
                 else
                 {
-                    if (c.Team == player)
+                    if (c.Team == player.Team)
                     {
                         return false;
                     }
@@ -228,7 +241,7 @@ namespace Checkers
 
         public Checker GetCaptureChecker(Color player, Position src, Position dest)
         {
-            if(IsCapture(player,src,dest))
+            if(IsCapture(src, dest))
             {
                 int row_mid = (dest.Row + src.Row) / 2;
                 int col_mid = (dest.Col + src.Col) / 2;
@@ -242,9 +255,35 @@ namespace Checkers
             }
         }
 
-        public Position ProcessInput()
+        public void ProcessInput()
         {
-            //Do something here...
+            Console.WriteLine("Select a checker to move (Row, Column):");
+            string[] source = Console.ReadLine().Split(',');
+            Console.WriteLine("Select a square to move the checker to (Row, Column):");
+            string[] destination = Console.ReadLine().Split(',');
+            Position from = new Position(int.Parse(source[0]), int.Parse(source[1]));
+            Position to = new Position(int.Parse(destination[0]), int.Parse(destination[1]));
+            Checker c = board.GetChecker(from);
+            if (c != null)
+            {
+                if (IsLegalMove(c.Team, from, to))
+                {
+                    board.MoveChecker(c, to);
+                    if (IsCapture(from, to))
+                    {
+                        Checker captured = GetCaptureChecker(c.Team, from, to);
+                        board.RemoveChecker(captured);
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("That is an invalid move, Please double check your source and destination.");
+                }
+            }
+            else
+            {
+                Console.WriteLine("That is an invalid move, Please double check your source and destination.");
+            }
         }
 
         public void DrawBoard()
@@ -263,29 +302,39 @@ namespace Checkers
                 grid[c.Position.Row][c.Position.Col] = c.Symbol;
             }
 
-            Console.WriteLine("  0  1  2  3  4  5  6  7");
-            Console.WriteLine("  ");
-            for(int i = 0; i < 32; i++)
+            Console.WriteLine("    0   1   2   3   4   5   6   7");
+            Console.Write("  ");
+            for(int i = 0; i < 33; i++)
             {
-                Console.WriteLine("\u2501");
+                Console.Write("\u2501");
             }
-            Console.WriteLine("");
+            Console.WriteLine();
+
             for(int r = 0; r < 8; r++)
             {
-                Console.WriteLine(r);
+                Console.Write($"{r} \u2503");
                 for(int c = 0; c < 8; c++)
                 {
-                    Console.WriteLine($"  {grid[r][c]} \u2503");
+                    Console.Write($" {grid[r][c]} \u2503");
                 }
                 Console.WriteLine();
-                Console.WriteLine("  ");
-                for (int i = 0; i < 32; i++)
+                Console.Write("  ");
+                for (int i = 0; i < 33; i++)
                 {
-                    Console.WriteLine("\u2501");
+                    Console.Write("\u2501");
                 }
                 Console.WriteLine("");
             }
         }
+
+        public void CheckerStartingPoint()
+        {
+            foreach (Checker c in board.checkers)
+            {
+                Console.WriteLine("{0} - ({1}, {2})",c.Team,c.Position.Row,c.Position.Col);
+            }
+        }
+        #endregion
     }
     #endregion
 }

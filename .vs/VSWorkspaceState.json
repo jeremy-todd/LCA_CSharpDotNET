@@ -1,9 +1,8 @@
 {
   "ExpandedNodes": [
     "",
-    "\\CarLot",
     "\\Checkers"
   ],
-  "SelectedNode": "\\Checkers\\Checkers.csproj",
+  "SelectedNode": "\\Inventory",
   "PreviewInSolutionExplorer": false
 }
