@@ -176,13 +176,14 @@ namespace Checkers
             //4. Now we have made sure that the dest position and src position are on the same
             //line and with the correct distance.
             //4.1 There must be a checker at the src position
-            Checker c = board.GetChecker(src);
-            if (c == null)
+            Checker cs = board.GetChecker(src);
+            Checker cd = board.GetChecker(dest);
+            if (cs == null)
             {
                 return false;
             }
             //4.2 There must not be a checker at the dest position
-            if (c != null)
+            if (cd != null)
             {
                 return false;
             }
@@ -274,6 +275,7 @@ namespace Checkers
                         Checker captured = GetCaptureChecker(c.Team, from, to);
                         board.RemoveChecker(captured);
                     }
+                    DrawBoard();
                 }
                 else
                 {
