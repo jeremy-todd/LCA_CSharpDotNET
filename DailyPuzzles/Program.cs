@@ -80,7 +80,7 @@ namespace DailyPuzzles
             #endregion
 
             #region Week 6 Day 2
-            int[] unsortedArray = new int[] { 37, 89, 41, 65, 91, 53, 14, 25, 115 }; //[14, 25, 37, 41, 53, 65, 89, 91, 115]
+            /*int[] unsortedArray = new int[] { 37, 89, 41, 65, 91, 53, 14, 25, 115 }; //[14, 25, 37, 41, 53, 65, 89, 91, 115]
             int[] maxValueArray = new int[] {95366, 75793, 59383, 50481, 38032, 91835, 57007, 323, 101254, 8567}; //101254
             Console.WriteLine("Unsorted Array:");
             Console.WriteLine("[{0}]", string.Join(", ", unsortedArray));
@@ -93,6 +93,11 @@ namespace DailyPuzzles
             Console.WriteLine("");
             Console.WriteLine("Max Value of Max Value Array");
             Console.WriteLine(W6d2MaxValue(maxValueArray));
+            Console.Read();*/
+            #endregion
+
+            #region Week 7 Day 1
+            W7d1Fibonacci();
             Console.Read();
             #endregion
         }
@@ -307,6 +312,28 @@ namespace DailyPuzzles
                 }
             }
             return maxValue;
+        }
+
+        public static void W7d1Fibonacci()
+        {
+            int a = 0, b = 1, c = 0;
+            List<int> fib = new List<int>() { 0, 1 };
+            int sumEvens = 0;
+            for (int i = 2; c < 3500000; i++)
+            {
+                c = a + b;
+                fib.Add(c);
+                a = b;
+                b = c;
+            }
+            foreach(int j in fib)
+            {
+                if(j % 2 == 0)
+                {
+                    sumEvens += j;
+                }
+            }
+            Console.WriteLine("The sum of even terms under 4,000,000 of the Fibonacci Sequence is " + sumEvens + ".");
         }
     }
 }
