@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Checkers
 {
-    class Program
+    class ProgramCheck
     {
         static void Main(string[] args)
         {
@@ -43,13 +43,13 @@ namespace Checkers
         {
             if(team == Color.White)
             {
-                int symbol = int.Parse("25CF", System.Globalization.NumberStyles.HexNumber); //open circle
+                int symbol = int.Parse("25CB", System.Globalization.NumberStyles.HexNumber); //open circle
                 Symbol = char.ConvertFromUtf32(symbol);
-                Team = Color.Black;
+                Team = Color.White;
             }
             else
             {
-                int symbol = int.Parse("25CB", System.Globalization.NumberStyles.HexNumber); //closed circle
+                int symbol = int.Parse("25CF", System.Globalization.NumberStyles.HexNumber); //closed circle
                 Symbol = char.ConvertFromUtf32(symbol);
                 Team = Color.Black;
             }
@@ -133,7 +133,7 @@ namespace Checkers
         public void Start()
         {
             DrawBoard();
-            while(CheckForWin())
+            while(!CheckForWin())
             {
                 this.ProcessInput();
             }
@@ -269,12 +269,12 @@ namespace Checkers
             {
                 if (IsLegalMove(c.Team, from, to))
                 {
-                    board.MoveChecker(c, to);
                     if (IsCapture(from, to))
                     {
                         Checker captured = GetCaptureChecker(c.Team, from, to);
                         board.RemoveChecker(captured);
                     }
+                    board.MoveChecker(c, to);
                     DrawBoard();
                 }
                 else
