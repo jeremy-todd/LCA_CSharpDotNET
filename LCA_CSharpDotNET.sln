@@ -35,6 +35,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Inventory", "Inventory\Inve
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Checkers", "Checkers\Checkers.csproj", "{7062F89A-30AA-4C48-A2F0-AAC53BE4D74E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SQLQueries", "SQLQueries\SQLQueries.csproj", "{9799ADD7-92B1-453C-8FBB-BF0FC69D582E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -105,6 +107,10 @@ Global
 		{7062F89A-30AA-4C48-A2F0-AAC53BE4D74E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7062F89A-30AA-4C48-A2F0-AAC53BE4D74E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7062F89A-30AA-4C48-A2F0-AAC53BE4D74E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9799ADD7-92B1-453C-8FBB-BF0FC69D582E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9799ADD7-92B1-453C-8FBB-BF0FC69D582E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9799ADD7-92B1-453C-8FBB-BF0FC69D582E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9799ADD7-92B1-453C-8FBB-BF0FC69D582E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

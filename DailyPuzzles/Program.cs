@@ -319,7 +319,7 @@ namespace DailyPuzzles
             int a = 0, b = 1, c = 0;
             List<int> fib = new List<int>() { 0, 1 };
             int sumEvens = 0;
-            for (int i = 2; c < 3500000; i++)
+            for (int i = 2; i < 34; i++)
             {
                 c = a + b;
                 fib.Add(c);
@@ -328,7 +328,7 @@ namespace DailyPuzzles
             }
             foreach(int j in fib)
             {
-                if(j % 2 == 0)
+                if(j % 2 == 0 && j < 4000000)
                 {
                     sumEvens += j;
                 }
