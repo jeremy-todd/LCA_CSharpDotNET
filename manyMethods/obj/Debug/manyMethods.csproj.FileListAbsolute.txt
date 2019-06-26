@@ -12,3 +12,10 @@ T:\LCA_CSharpDotNET\manyMethods\obj\Debug\manyMethods.csprojAssemblyReference.ca
 T:\LCA_CSharpDotNET\manyMethods\obj\Debug\manyMethods.csproj.CoreCompileInputs.cache
 T:\LCA_CSharpDotNET\manyMethods\obj\Debug\manyMethods.exe
 T:\LCA_CSharpDotNET\manyMethods\obj\Debug\manyMethods.pdb
+C:\Users\jeremy.todd\Documents\LubbockCodingAcademy\LCA_CSharpDotNET\manyMethods\bin\Debug\manyMethods.exe.config
+C:\Users\jeremy.todd\Documents\LubbockCodingAcademy\LCA_CSharpDotNET\manyMethods\bin\Debug\manyMethods.exe
+C:\Users\jeremy.todd\Documents\LubbockCodingAcademy\LCA_CSharpDotNET\manyMethods\bin\Debug\manyMethods.pdb
+C:\Users\jeremy.todd\Documents\LubbockCodingAcademy\LCA_CSharpDotNET\manyMethods\obj\Debug\manyMethods.csprojAssemblyReference.cache
+C:\Users\jeremy.todd\Documents\LubbockCodingAcademy\LCA_CSharpDotNET\manyMethods\obj\Debug\manyMethods.csproj.CoreCompileInputs.cache
+C:\Users\jeremy.todd\Documents\LubbockCodingAcademy\LCA_CSharpDotNET\manyMethods\obj\Debug\manyMethods.exe
+C:\Users\jeremy.todd\Documents\LubbockCodingAcademy\LCA_CSharpDotNET\manyMethods\obj\Debug\manyMethods.pdb
