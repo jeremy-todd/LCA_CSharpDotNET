@@ -10,9 +10,13 @@ namespace ToDoList
 {
     class Program
     {
+        //variable to allow filtering of the To Do List
+        public static string filterType = "";
+        public static string filterCriteria = "";
+
         static void Main(string[] args)
         {
-            //variable to determine when the user is done entering books
+            //variable to determine when the user is done interacting with the To Do List
             bool done = false;
 
             //instantiate an instance of the context
@@ -23,100 +27,45 @@ namespace ToDoList
 
             while (!done)
             {
-                //ask the user for a item to add
-                ToDoListContext.ReviewToDoList(todoList.ToDoList);
-                Console.WriteLine("Do you want to 'review' items by status or priority, 'add' a ToDo Item, 'update' a ToDo Item, or 'delete' a ToDo Item? Type 'done' when finished.");
-                string action = Console.ReadLine();
+                //ask the user what they want to do
+                ReviewToDoList(todoList.ToDoList, filterType, filterCriteria); ;
+                Console.WriteLine("Do you want to 'filter' the items, 'reset' the filters, 'add' an item, 'update' an item, or 'delete' an item?");
+                Console.WriteLine("Type 'done' when finished.");
+                string action = Console.ReadLine().ToLower();
 
-                if (action.ToLower() != "done")
+                if (action != "done")
                 {
-                    if (action.ToLower() == "update" || action.ToLower() == "delete")
+                    #region Filter
+                    if (action.ToLower() == "filter")
                     {
-                        //what to do next if the user wants to update a book
-                        if (action.ToLower() == "update")
-                        {
-                            //ask which item the user wishes to update
-                            Console.WriteLine("Enter the ID of the item to update.");
-                            string todoID = Console.ReadLine();
-                            ToDoItem UpdatedToDoItem = todoList.ToDoList.Where(x => x.ID == int.Parse(todoID)).FirstOrDefault();
-                            todoList.Update(ToDoListContext.GetItem(action, UpdatedToDoItem));
-                            todoList.SaveChanges();
-                            ToDoListContext.ReviewToDoList(todoList.ToDoList);
-                        }
-                        //what to do next if the user wants to delete an item
-                        else if (action.ToLower() == "delete")
-                        {
-                            string verify = "NO";
-                            string todoID = "";
-                            while (verify == "NO")
-                            {
-                                //ask which item the user wishes to delete
-                                Console.WriteLine("Enter the ID of the item to delete or type 'CANCEL'.");
-                                todoID = Console.ReadLine();
-                                if (todoID == "CANCEL")
-                                {
-                                    break;
-                                }
-                                Console.WriteLine("You have chosen to delete item " + todoID + ".");
-                                Console.WriteLine("Is the correct? YES or NO?");
-                                verify = Console.ReadLine();
-                            }
-                            if (todoID != "CANCEL")
-                            {
-                                ToDoItem DeleteItem = todoList.ToDoList.Where(x => x.ID == int.Parse(todoID)).FirstOrDefault();
-                                todoList.Remove(DeleteItem);
-                                todoList.SaveChanges();
-                                ToDoListContext.ReviewToDoList(todoList.ToDoList);
-                            }
-                        }
+                        FilterItems();
                     }
-                    else if (action.ToLower() == "add")
+                    #endregion
+                    #region Reset
+                    else if (action == "reset")
                     {
-                        //call method to get the book object to add.
-                        //add the newly created book instance to the context.
-                        //notice how similar this is to adding an item to a list.
-                        todoList.Add(ToDoListContext.GetItem(action, null));
-
-                        //ask the context to save any changes to the database
-                        todoList.SaveChanges();
-
-                        //use a foreach loop to loop through the students in the context
-                        //notice how similar this is to looping through a list
-                        ToDoListContext.ReviewToDoList(todoList.ToDoList);
+                        filterType = "";
+                        filterCriteria = "";
                     }
-                    else if (action.ToLower() == "review")
+                    #endregion
+                    #region Add
+                    else if (action == "add")
                     {
-                        //Ask the user how they want to filter the items
-                        Console.WriteLine("Do you want to filter by 'Status' or 'Priority'?");
-                        string filter = Console.ReadLine();
-                        //what to do if the user wants to filter by status
-                        if(filter.ToLower() == "status")
-                        {
-                            //ask the user which status they want to filter by
-                            Console.WriteLine("Do you want to view 'Pending', 'In Progress', or 'Completed' items?");
-                            string filterS = Console.ReadLine();
-                            foreach(ToDoItem t in todoList.ToDoList)
-                            {
-                                if(t.Status == filterS)
-                                {
-                                    Console.WriteLine("   {0} - {1} | {2} | {3} | {4}",t.ID, t.Desc, t.DueDate, t.Status, t.Priority);
-                                }
-                            }
-                        }
-                        else if(filter.ToLower() == "priority")
-                        {
-                            //ask the user which priority they want to filter by
-                            Console.WriteLine("Do you want to view 'Low', 'Normal', or 'High' priority items?");
-                            string filterS = Console.ReadLine();
-                            foreach (ToDoItem t in todoList.ToDoList)
-                            {
-                                if (t.Status == filterS)
-                                {
-                                    Console.WriteLine("   {0} - {1} | {2} | {3} | {4}", t.ID, t.Desc, t.DueDate, t.Status, t.Priority);
-                                }
-                            }
-                        }
+                        AddItems(todoList);
                     }
+                    #endregion
+                    #region Update
+                    else if (action == "update")
+                    {
+                        UpdateItems(todoList);
+                    }
+                    #endregion
+                    #region Delete
+                    else if (action == "delete")
+                    {
+                        DeleteItems(todoList);
+                    }
+                    #endregion
                 }
                 else
                 {
@@ -125,124 +74,182 @@ namespace ToDoList
             }
         }
 
-        class ToDoItem
+        public static void DeleteItems(ToDoListContext todoList)
         {
-            public int ID { get; private set; }
-            public string Desc { get; set; }
-            public string DueDate { get; set; }
-            public string Status { get; set; }
-            public string Priority { get; set; }
-
-            public ToDoItem(string Desc, string DueDate, string Status, string Priority)
+            string verify = "NO";
+            string todoID = "";
+            while (verify == "NO")
             {
-                this.Desc = Desc;
-                this.DueDate = DueDate;
-                this.Status = Status;
-                this.Priority = Priority;
+                //ask which item the user wishes to delete
+                Console.WriteLine("Enter the ID of the item to delete or type 'CANCEL'.");
+                todoID = Console.ReadLine();
+                if (todoID == "CANCEL")
+                {
+                    break;
+                }
+                Console.WriteLine("You have chosen to delete item " + todoID + ".");
+                Console.WriteLine("Is the correct? YES or NO?");
+                verify = Console.ReadLine();
+            }
+            if (todoID != "CANCEL")
+            {
+                ToDoItem DeleteItem = todoList.ToDoList.Where(x => x.ID == int.Parse(todoID)).FirstOrDefault();
+                todoList.Remove(DeleteItem);
+                todoList.SaveChanges();
             }
         }
-
-        class ToDoListContext : DbContext
+        public static void UpdateItems(ToDoListContext todoList)
         {
-            //this property corresponds to the table in our database
-            public DbSet<ToDoItem> ToDoList { get; set; }
+            //ask which item the user wishes to update
+            Console.WriteLine("Enter the ID of the item to update.");
+            string todoID = Console.ReadLine();
+            ToDoItem UpdatedToDoItem = todoList.ToDoList.Where(x => x.ID == int.Parse(todoID)).FirstOrDefault();
+            Update(UpdatedToDoItem);
+            todoList.SaveChanges();
+        }
+        public static void AddItems(ToDoListContext todoList)
+        {
+            //call method to get the book object to add.
+            //add the newly created book instance to the context.
+            //notice how similar this is to adding an item to a list.
+            Add();
 
-            protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+            //ask the context to save any changes to the database
+            todoList.SaveChanges();
+        }
+        public static Tuple<string, string> FilterItems()
+        {
+            //Ask the user how they want to filter the items
+            Console.WriteLine("Do you want to filter by 'Status' or 'Priority'?");
+            filterType= Console.ReadLine().ToLower();
+            //what to do if the user wants to filter by status
+            #region Filter by Status
+            if (filterType.ToLower() == "status")
             {
-                //get the directory the code is being executed from
-                DirectoryInfo ExecutionDirectory = new DirectoryInfo(AppContext.BaseDirectory);
-
-                //get the directory for the project
-                DirectoryInfo ProjectBase = ExecutionDirectory.Parent.Parent.Parent;
-
-                //add 'books.db' to the project directory
-                String DatabaseFile = Path.Combine(ProjectBase.FullName, "todoList.db");
-
-                //to check what the path of the file ism uncomment the file below
-                //Console.WriteLine("using database file: " + DatabaseFile);
-
-                optionsBuilder.UseSqlite("Data Source=" + DatabaseFile);
+                //ask the user which status they want to filter by
+                Console.WriteLine("Do you want to view 'Pending', 'In Progress', or 'Completed' items?");
+                filterCriteria = Console.ReadLine().ToLower();
+                return Tuple.Create(filterType, filterCriteria);
             }
-
-            public static void ReviewToDoList(DbSet<ToDoItem> todoList)
+            #endregion
+            #region Filter by Priority
+            else if (filterType.ToLower() == "priority")
             {
-                //Clear the console to keep it clean
-                Console.Clear();
-                Console.WriteLine("ToDo (ID | Description | Due Date | Status | Priority)");
-                Console.WriteLine();
-                foreach (ToDoItem t in todoList)
-                {
-                    Console.WriteLine("   {0} - {1} | {2} | {3} | {4}",t.ID, t.Desc, t.DueDate, t.Status, t.Priority);
-                }
-                Console.WriteLine();
+                //ask the user which priority they want to filter by
+                Console.WriteLine("Do you want to view 'Low', 'Normal', or 'High' priority items?");
+                filterCriteria = Console.ReadLine().ToLower();
+                return Tuple.Create(filterType, filterCriteria);
             }
-
-            public static ToDoItem GetItem(string action, ToDoItem UpdatedToDoItem)
+            #endregion
+            else
             {
-                //ask the user for the todo item description
-                if (action == "add")
+                filterCriteria = "";
+                filterType = "";
+                return Tuple.Create(filterType, filterCriteria);
+            }
+        }
+        public static ToDoItem Update(ToDoItem UpdatedToDoItem)
+        {
+            bool done = false;
+            string desc = "";
+            string dueDate = "";
+            string status = "";
+            string priority = "";
+            while (!done)
+            {
+                Console.WriteLine("What do you need to update('desc', 'due date', 'status', 'priority')?");
+                Console.WriteLine("Type 'done' when finished.");
+                string input = Console.ReadLine().ToLower();
+                if (input == "desc")
                 {
-                    Console.WriteLine("Please enter the desciption of the ToDo Item.");
+                    Console.WriteLine("Please enter the updated desciption of the item.");
+                    desc = Console.ReadLine();
                 }
-                else if (action == "update")
-                {
-                    Console.WriteLine("Please enter the updated desciption of the ToDo Item.");
-                    Console.WriteLine("(Enter the same description if no changes need to be made.)");
-                }
-                string desc = Console.ReadLine();
-                //ask the user for the todo item's due date
-                if (action == "add")
-                {
-                    Console.WriteLine("Enter the item's due date (MM/DD/YYYY).");
-                }
-                else if (action == "update")
+                else if (input == "due date")
                 {
                     Console.WriteLine("Enter the updated due date of the item (MM/DD/YYY).");
-                    Console.WriteLine("(Enter the same due date if no changes need to be made.)");
+                    dueDate = Console.ReadLine();
                 }
-                string dueDate = Console.ReadLine();
-                //ask the user for the todo item's status
-                if (action == "add")
+                else if (input == "status")
                 {
-                    Console.WriteLine("Enter the item's status (pending, in progress, completed).");
+                    Console.WriteLine("Enter the updated status of the item (Pending, In Progress, Completed).");
+                    status = Console.ReadLine();
                 }
-                else if (action == "update")
+                else if (input == "priority")
                 {
-                    Console.WriteLine("Enter the updated status of the item (pending, in progress, completed).");
-                    Console.WriteLine("(Enter the same status if no changes need to be made.)");
+                    Console.WriteLine("Enter the item's updated priority ('Low', 'Normal', 'High').");
+                    priority = Console.ReadLine();
                 }
-                string status = Console.ReadLine();
-                //ask the user for the todo item's priority
-                if (action == "add")
+                else if (input == "done")
                 {
-                    Console.WriteLine("Enter the item's priority (low, normal, high).");
+                    done = true;
                 }
-                else if (action == "update")
-                {
-                    Console.WriteLine("Enter the item's updated priority (low, normal, high).");
-                    Console.WriteLine("(Enter the same priority if no changes need to be made.)");
-                }
-                string priority = Console.ReadLine();
+            }
+            if (desc != "")
+            {
+                UpdatedToDoItem.Desc = desc;
+            }
+            if (dueDate != "")
+            {
+                UpdatedToDoItem.DueDate = dueDate;
+            }
+            if (status != "")
+            {
+                UpdatedToDoItem.Status = status;
+            }
+            if (priority != "")
+            {
+                UpdatedToDoItem.Priority = priority;
+            }
 
-                //create a new book object, notice that we do not select an id, we let the framework handle that
-                if (action == "add")
+            return UpdatedToDoItem;
+        }
+        public static ToDoItem Add()
+        {
+            Console.WriteLine("Please enter the desciption of the ToDo Item.");
+            string desc = Console.ReadLine();
+            Console.WriteLine("Enter the item's due date (MM/DD/YYYY).");
+            string dueDate = Console.ReadLine();
+            Console.WriteLine("Enter the item's status (pending, in progress, completed).");
+            string status = Console.ReadLine();
+            Console.WriteLine("Enter the item's priority (low, normal, high).");
+            string priority = Console.ReadLine();
+
+            ToDoItem newToDoItem = new ToDoItem(desc, dueDate, status, priority);
+            return newToDoItem;
+        }
+        public static void ReviewToDoList(DbSet<ToDoItem> todoList, string filter, string filterCriteria)
+        {
+            //Clear the console to keep it clean
+            Console.Clear();
+            Console.WriteLine("ToDo (ID | Description | Due Date | Status | Priority)");
+            Console.WriteLine();
+            foreach (ToDoItem t in todoList)
+            {
+                if (filterType == "")
                 {
-                    ToDoItem newToDoItem = new ToDoItem(desc, dueDate, status, priority);
-                    return newToDoItem;
-                }
-                else if (action == "update")
-                {
-                    UpdatedToDoItem.Desc = desc;
-                    UpdatedToDoItem.DueDate = dueDate;
-                    UpdatedToDoItem.Status = status;
-                    UpdatedToDoItem.Priority = priority;
-                    return UpdatedToDoItem;
+                    Console.WriteLine("   {0} - {1} | {2} | {3} | {4}", t.ID, t.Desc, t.DueDate, t.Status, t.Priority);
                 }
                 else
                 {
-                    return null;
+                    if (filterType == "status")
+                    {
+                        if(t.Status.ToLower() == filterCriteria)
+                        {
+                            Console.WriteLine("   {0} - {1} | {2} | {3} | {4}", t.ID, t.Desc, t.DueDate, t.Status, t.Priority);
+                        } 
+                    }
+                    else if (filterType == "priority")
+                    {
+                        if (t.Priority.ToLower() == filterCriteria)
+                        {
+                            Console.WriteLine("   {0} - {1} | {2} | {3} | {4}", t.ID, t.Desc, t.DueDate, t.Status, t.Priority);
+                        }
+                    }
                 }
+                
             }
+            Console.WriteLine();
         }
     }
 }
