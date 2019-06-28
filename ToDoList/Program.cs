@@ -20,7 +20,7 @@ namespace ToDoList
             bool done = false;
 
             //instantiate an instance of the context
-            ToDoListContext todoList = new ToDoListContext();
+            ItemContext todoList = new ItemContext();
 
             //make sure that the table exists, and create it if it does not already exist.
             todoList.Database.EnsureCreated();
@@ -74,7 +74,7 @@ namespace ToDoList
             }
         }
 
-        public static void DeleteItems(ToDoListContext todoList)
+        public static void DeleteItems(ItemContext todoList)
         {
             string verify = "NO";
             string todoID = "";
@@ -98,7 +98,7 @@ namespace ToDoList
                 todoList.SaveChanges();
             }
         }
-        public static void UpdateItems(ToDoListContext todoList)
+        public static void UpdateItems(ItemContext todoList)
         {
             //ask which item the user wishes to update
             Console.WriteLine("Enter the ID of the item to update.");
@@ -107,7 +107,7 @@ namespace ToDoList
             Update(UpdatedToDoItem);
             todoList.SaveChanges();
         }
-        public static void AddItems(ToDoListContext todoList)
+        public static void AddItems(ItemContext todoList)
         {
             //call method to get the book object to add.
             //add the newly created book instance to the context.
