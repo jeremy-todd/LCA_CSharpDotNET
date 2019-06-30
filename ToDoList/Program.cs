@@ -22,13 +22,16 @@ namespace ToDoList
             //instantiate an instance of the context
             ItemContext todoList = new ItemContext();
 
+            //instantiate an instance of ConsoleUtils class
+            ConsoleUtils consoleUtils = new ConsoleUtils();
+
             //make sure that the table exists, and create it if it does not already exist.
             todoList.Database.EnsureCreated();
 
             while (!done)
             {
                 //ask the user what they want to do
-                ReviewToDoList(todoList.ToDoList, filterType, filterCriteria); ;
+                consoleUtils.ReviewToDoList(todoList.ToDoList, filterType, filterCriteria); ;
                 Console.WriteLine("Do you want to 'filter' the items, 'reset' the filters, 'add' an item, 'update' an item, or 'delete' an item?");
                 Console.WriteLine("Type 'done' when finished.");
                 string action = Console.ReadLine().ToLower();
@@ -218,7 +221,7 @@ namespace ToDoList
             ToDoItem newToDoItem = new ToDoItem(desc, dueDate, status, priority);
             return newToDoItem;
         }
-        public static void ReviewToDoList(DbSet<ToDoItem> todoList, string filter, string filterCriteria)
+        /*public static void ReviewToDoList(DbSet<ToDoItem> todoList, string filter, string filterCriteria)
         {
             //Clear the console to keep it clean
             Console.Clear();
@@ -250,6 +253,6 @@ namespace ToDoList
                 
             }
             Console.WriteLine();
-        }
+        }*/
     }
 }
