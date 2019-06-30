@@ -13,24 +13,17 @@ namespace ToDoList
         //This class controls the displaying of the data
 
         //Fields
-        /*ItemContext ToDoList {get; set;}
-        string FilterType {get; set;}
-        string FilterCriteria {get; set;}*/
+        //Not sure if any fields are needed for this class
+        //DbSet<ItemContext> ToDoList { get; set; }
 
         //Comtroller for ConsoleUtils
-        /*public ConsoleUtils (ItemContext todoList, string filterType, string filterCriteria)
-	    {
-            ToDoList = todoList;
-            FilterType = filterType;
-            FilterCriteria = filterCriteria;
-	    }*/
         public ConsoleUtils()
         {
-
+            //ToDoList = todoList;
         }
         
         //methods
-        public static void ReviewToDoList(ItemContext todoList, string filterType, string filterCriteria)
+        public static void ReviewToDoList(string filterType, string filterCriteria)
         {
             //Clear the console to keep it clean
             Console.Clear();

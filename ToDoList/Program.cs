@@ -34,7 +34,7 @@ namespace ToDoList
             while (!done)
             {
                 //ask the user what they want to do
-                ConsoleUtils.ReviewToDoList(todoList, filterType, filterCriteria);
+                ConsoleUtils.ReviewToDoList(filterType, filterCriteria);
                 Console.WriteLine("Do you want to 'filter' the items, 'reset' the filters, 'add' an item, 'update' an item, or 'delete' an item?");
                 Console.WriteLine("Type 'done' when finished.");
                 string action = Console.ReadLine().ToLower();
