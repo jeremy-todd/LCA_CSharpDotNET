@@ -1,6 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using System.IO;
 
 namespace ToDoList
 {
@@ -9,26 +13,30 @@ namespace ToDoList
         //This class controls the displaying of the data
 
         //Fields
-        DbSet<ToDoItem> ToDoList {get; set;}
-        string Filter {get; set;}
-        string FilterCriteria {get; set;}
+        /*ItemContext ToDoList {get; set;}
+        string FilterType {get; set;}
+        string FilterCriteria {get; set;}*/
 
         //Comtroller for ConsoleUtils
-        public ConsoleUtils (DbSet<ToDoItem> todoList, string filter, string filterCriteria)
+        /*public ConsoleUtils (ItemContext todoList, string filterType, string filterCriteria)
 	    {
             ToDoList = todoList;
-            Filter = filter;
+            FilterType = filterType;
             FilterCriteria = filterCriteria;
-	    }
+	    }*/
+        public ConsoleUtils()
+        {
+
+        }
         
         //methods
-        public static void ReviewToDoList(DbSet<ToDoItem> todoList, string filter, string filterCriteria)
+        public static void ReviewToDoList(ItemContext todoList, string filterType, string filterCriteria)
         {
             //Clear the console to keep it clean
             Console.Clear();
             Console.WriteLine("ToDo (ID | Description | Due Date | Status | Priority)");
             Console.WriteLine();
-            foreach (ToDoItem t in todoList)
+            foreach (ToDoItem t in todoList)  //not sure how to fix this. If I fix this error, it throws errors in Program.cs
             {
                 if (filterType == "")
                 {
