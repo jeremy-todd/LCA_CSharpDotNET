@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 
 namespace ToDoList
 {
@@ -42,9 +43,11 @@ namespace ToDoList
             Console.WriteLine("Enter the item's due date (MM/DD/YYYY).");
             string dueDate = Console.ReadLine();
             Console.WriteLine("Enter the item's status (pending, in progress, completed).");
-            string status = Console.ReadLine();
+            string Status = Console.ReadLine();
+            string status = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(Status);
             Console.WriteLine("Enter the item's priority (low, normal, high).");
-            string priority = Console.ReadLine();
+            string Priority = Console.ReadLine();
+            string priority = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(Priority);
 
             App.AddItemApp(desc, dueDate, status, priority);
         }
@@ -77,12 +80,14 @@ namespace ToDoList
                 else if (input == "status")
                 {
                     Console.WriteLine("Please enter the updated status of the item.");
-                    status = Console.ReadLine();
+                    string Status = Console.ReadLine();
+                    status = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(Status);
                 }
                 else if (input == "priority")
                 {
                     Console.WriteLine("Please enter the updated priority of the item.");
-                    priority = Console.ReadLine();
+                    string Priority = Console.ReadLine();
+                    priority = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(Priority);
                 }
             }
             App.UpdateItemApp(todoID, desc, dueDate, status, priority);
@@ -110,19 +115,22 @@ namespace ToDoList
         {
             //Ask the user how they want to filter the items
             Console.WriteLine("Do you want to filter by 'Status' or 'Priority'?");
-            filterType = Console.ReadLine().ToLower();
+            string FilterType = Console.ReadLine();
+            filterType = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(FilterType);
             //what to do if the user wants to filter by status
             if (filterType.ToLower() == "status")
             {
                 //ask the user which status they want to filter by
                 Console.WriteLine("Do you want to view 'Pending', 'In Progress', or 'Completed' items?");
-                filterCriteria = Console.ReadLine().ToLower();
+                string FilterCriteria = Console.ReadLine();
+                filterCriteria = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(FilterCriteria);
             }
             else if (filterType.ToLower() == "priority")
             {
                 //ask the user which priority they want to filter by
                 Console.WriteLine("Do you want to view 'Low', 'Normal', or 'High' priority items?");
-                filterCriteria = Console.ReadLine().ToLower();
+                string FilterCriteria = Console.ReadLine();
+                filterCriteria = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(FilterCriteria);
             }
             else
             {
@@ -151,27 +159,28 @@ namespace ToDoList
                 //ask the user what they want to do
                 Console.WriteLine("Do you want to 'filter' the items, 'reset' the filters, 'add' an item, 'update' an item, or 'delete' an item?");
                 Console.WriteLine("Type 'done' when finished.");
-                string action = Console.ReadLine().ToLower();
+                string Action = Console.ReadLine();
+                string action = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(Action);
 
-                if (action != "done")
+                if (action != "Done")
                 {
-                    if (action == "filter")
+                    if (action == "Filter")
                     {
                         ConsoleUtils.FilterList();
                     }
-                    else if (action == "reset")
+                    else if (action == "Reset")
                     {
                         ConsoleUtils.ResetFilter();
                     }
-                    else if (action == "add")
+                    else if (action == "Add")
                     {
                         ConsoleUtils.AddItem();
                     }
-                    else if (action == "update")
+                    else if (action == "Update")
                     {
                         ConsoleUtils.UpdateItem();
                     }
-                    else if (action == "delete")
+                    else if (action == "Delete")
                     {
                         ConsoleUtils.DeleteItem();
                     }

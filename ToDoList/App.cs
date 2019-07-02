@@ -25,26 +25,7 @@ namespace ToDoList
         }
         public static void UpdateItemApp(string todoID, string desc, string dueDate, string status, string priority) //functional
         {
-            ToDoItem UpdatedToDoItem = ItemRepository.GetUpdateItem(todoID);
-
-            if (desc != "")
-            {
-                UpdatedToDoItem.Desc = desc;
-            }
-            if (dueDate != "")
-            {
-                UpdatedToDoItem.DueDate = dueDate;
-            }
-            if (status != "")
-            {
-                UpdatedToDoItem.Status = status;
-            }
-            if (priority != "")
-            {
-                UpdatedToDoItem.Priority = priority;
-            }
-
-            ItemRepository.UpdateItem(UpdatedToDoItem);
+            ItemRepository.UpdateItem(todoID, desc, dueDate, status, priority);
         }
         public static void AddItemApp(string desc, string dueDate, string status, string priority) //functional
         {

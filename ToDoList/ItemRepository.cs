@@ -26,29 +26,25 @@ namespace ToDoList
         public static List<ToDoItem> ReviewToDoList(string filterType, string filterCriteria)
         {
             List<ToDoItem> ReviewToDoList = new List<ToDoItem>();
-            foreach (ToDoItem t in todoList.ToDoList) {
-                if(filterType == "" && filterCriteria == "")
+            if(filterType == "" && filterCriteria == "")
+            {
+                foreach (ToDoItem t in todoList.ToDoList)
                 {
                     ReviewToDoList.Add(t);
                 }
-                else
+            }
+            else
+            {
+                if(filterType == "Status")
                 {
-                    if(filterType == "status")
-                    {
-                        if(t.Status.ToLower() == filterCriteria)
-                        {
-                            ReviewToDoList.Add(t);
-                        }
-                    }
-                    else if (filterType == "priority")
-                    {
-                        if(t.Priority.ToLower() == filterCriteria)
-                        {
-                            ReviewToDoList.Add(t);
-                        }
-                    }
+                    //ReviewToDoList.Add(todoList.ToDoList.Where(x => x.Status == filterCriteria));
+                    todoList.ToDoList.Where(x => x.Status == filterCriteria);
                 }
-                
+                else if (filterType == "Priority")
+                {
+                    //ReviewToDoList.Add(todoList.ToDoList.Where(x => x.Priority == filterCriteria));
+                    todoList.ToDoList.Where(x => x.Priority == filterCriteria);
+                }
             }
             return ReviewToDoList;
         }
@@ -64,15 +60,26 @@ namespace ToDoList
             }
         }
 
-        public static ToDoItem GetUpdateItem(string todoID) //functional
+        public static void UpdateItem(string todoID, string desc, string dueDate, string status, string priority)
         {
             ToDoItem UpdatedToDoItem = todoList.ToDoList.Where(x => x.ID == int.Parse(todoID)).FirstOrDefault();
-            
-            return UpdatedToDoItem;
-        }
 
-        public static void UpdateItem(ToDoItem UpdatedToDoItem)
-        {
+            if (desc != "")
+            {
+                UpdatedToDoItem.Desc = desc;
+            }
+            if (dueDate != "")
+            {
+                UpdatedToDoItem.DueDate = dueDate;
+            }
+            if (status != "")
+            {
+                UpdatedToDoItem.Status = status;
+            }
+            if (priority != "")
+            {
+                UpdatedToDoItem.Priority = priority;
+            }
             todoList.Update(UpdatedToDoItem);
             todoList.SaveChanges();
         }
