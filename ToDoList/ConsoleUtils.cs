@@ -21,43 +21,26 @@ namespace ToDoList
         {
             
         }
-        
+
+        public static string filterType = ""; //Not sure I will need this once I get the FilterItems method working
+        public static string filterCriteria = ""; //Not sure I will need this once I get the FilterItems method working
+
         //methods
-        public static void ReviewItems(ItemContext todoList, string filterType, string filterCriteria) //functional
+        public static void ReviewItems() //in testing
         {
+            List<ToDoItem> ReviewToDoList = new List<ToDoItem>();
+            ReviewToDoList = App.ReviewToDoList(filterType, filterCriteria);
             //Clear the console to keep it clean
             //Console.Clear();
             Console.WriteLine("ToDo (ID | Description | Due Date | Status | Priority)");
             Console.WriteLine();
-            foreach (ToDoItem t in todoList.ToDoList)  //not sure how to fix this. If I fix this error, it throws errors in Program.cs
+            foreach (ToDoItem t in ReviewToDoList)  //not sure how to fix this. If I fix this error, it throws errors in Program.cs
             {
-                if (filterType == "")
-                {
-                    Console.WriteLine("   {0} - {1} | {2} | {3} | {4}", t.ID, t.Desc, t.DueDate, t.Status, t.Priority);
-                }
-                else
-                {
-                    if (filterType == "status")
-                    {
-                        if(t.Status.ToLower() == filterCriteria)
-                        {
-                            Console.WriteLine("   {0} - {1} | {2} | {3} | {4}", t.ID, t.Desc, t.DueDate, t.Status, t.Priority);
-                        } 
-                    }
-                    else if (filterType == "priority")
-                    {
-                        if (t.Priority.ToLower() == filterCriteria)
-                        {
-                            Console.WriteLine("   {0} - {1} | {2} | {3} | {4}", t.ID, t.Desc, t.DueDate, t.Status, t.Priority);
-                        }
-                    }
-                }
-                
+                Console.WriteLine("   {0} - {1} | {2} | {3} | {4}", t.ID, t.Desc, t.DueDate, t.Status, t.Priority);                
             }
             Console.WriteLine();
         }
-
-        public static void GetAddItem() //functional
+        public static void AddItem() //functional
         {
             Console.WriteLine("Please enter the desciption of the ToDo Item.");
             string desc = Console.ReadLine();
@@ -70,52 +53,46 @@ namespace ToDoList
 
             App.AddItemApp(desc, dueDate, status, priority);
         }
-
-        public static void GetUpdateItemID() //functional
+        public static void UpdateItem() //functional
         {
             //ask which item the user wishes to update
             Console.WriteLine("Enter the ID of the item to update.");
             string todoID = Console.ReadLine();
-            App.UpdateItemApp(todoID);
-        }
+            string input = "";
+            string desc = "";
+            string dueDate = "";
+            string status = "";
+            string priority = "";
 
-        public static string GetUpdatedItemAction()
-        {
-            Console.WriteLine("What do you need to update('desc', 'due date', 'status', 'priority')?");
-            Console.WriteLine("Type 'done' when finished.");
-            string input = Console.ReadLine().ToLower();
-            App.UpdateItemApp(input);
+            while (input != "done")
+            {
+                Console.WriteLine("What do you need to update('desc', 'due date', 'status', 'priority')?");
+                Console.WriteLine("Type 'done' when finished.");
+                input = Console.ReadLine().ToLower();
+                if (input == "desc")
+                {
+                    Console.WriteLine("Please enter the updated desciption of the item.");
+                    desc = Console.ReadLine();
+                }
+                else if (input == "due date")
+                {
+                    Console.WriteLine("Please enter the updated due date of the item.");
+                    dueDate = Console.ReadLine();
+                }
+                else if (input == "status")
+                {
+                    Console.WriteLine("Please enter the updated status of the item.");
+                    status = Console.ReadLine();
+                }
+                else if (input == "priority")
+                {
+                    Console.WriteLine("Please enter the updated priority of the item.");
+                    priority = Console.ReadLine();
+                }
+            }
+            App.UpdateItemApp(todoID, desc, dueDate, status, priority);
         }
-
-        public static string GetUpdatedItemDesc()
-        {
-            Console.WriteLine("Please enter the updated desciption of the item.");
-            string desc = Console.ReadLine();
-            return desc;
-        }
-
-        public static string GetUpdatedItemDueDate()
-        {
-            Console.WriteLine("Please enter the updated due date of the item.");
-            string dueDate = Console.ReadLine();
-            return dueDate;
-        }
-        public static string GetUpdatedItemStatus()
-        {
-            Console.WriteLine("Please enter the updated status of the item.");
-            string status = Console.ReadLine();
-            return status;
-        }
-
-        public static string GetUpdatedItemPriority()
-        {
-            Console.WriteLine("Please enter the updated priority of the item.");
-            string priority = Console.ReadLine();
-            return priority;
-        }
-
-
-        public static void GetDeleteItem() //functional
+        public static void DeleteItem() //functional
         {
             string verify = "NO";
             string todoID = "CANCEL";
@@ -134,15 +111,85 @@ namespace ToDoList
             }
             App.DeleteItemApp(todoID);
         }
-
-        public static string UserInput()
+        public static void FilterList() //in testing
         {
-            //ask the user what they want to do
-            Console.WriteLine("Do you want to 'filter' the items, 'reset' the filters, 'add' an item, 'update' an item, or 'delete' an item?");
-            Console.WriteLine("Type 'done' when finished.");
-            string action = Console.ReadLine().ToLower();
-            Console.WriteLine(App.UserActionValidation(action));
-            return action;
+            //Ask the user how they want to filter the items
+            Console.WriteLine("Do you want to filter by 'Status' or 'Priority'?");
+            filterType = Console.ReadLine().ToLower();
+            //what to do if the user wants to filter by status
+            if (filterType.ToLower() == "status")
+            {
+                //ask the user which status they want to filter by
+                Console.WriteLine("Do you want to view 'Pending', 'In Progress', or 'Completed' items?");
+                filterCriteria = Console.ReadLine().ToLower();
+            }
+            else if (filterType.ToLower() == "priority")
+            {
+                //ask the user which priority they want to filter by
+                Console.WriteLine("Do you want to view 'Low', 'Normal', or 'High' priority items?");
+                filterCriteria = Console.ReadLine().ToLower();
+            }
+            else
+            {
+                filterCriteria = "";
+                filterType = "";
+            }
+
+            App.ReviewToDoList(filterType, filterCriteria);
+        }
+        public static void ResetFilter() //in testing
+        {
+            filterType = "";
+            filterCriteria = "";
+            App.ReviewToDoList(filterType, filterCriteria);
+        }
+        public static void UserInput() //in testing
+        {
+            //variable to determine when the user is done interacting with the To Do List
+            bool done = false;
+
+            
+            while (!done)
+            {
+                //ask the user what they want to do
+                ReviewItems();
+                //ask the user what they want to do
+                Console.WriteLine("Do you want to 'filter' the items, 'reset' the filters, 'add' an item, 'update' an item, or 'delete' an item?");
+                Console.WriteLine("Type 'done' when finished.");
+                string action = Console.ReadLine().ToLower();
+
+                if (action != "done")
+                {
+                    if (action == "filter")
+                    {
+                        ConsoleUtils.FilterList();
+                    }
+                    else if (action == "reset")
+                    {
+                        ConsoleUtils.ResetFilter();
+                    }
+                    else if (action == "add")
+                    {
+                        ConsoleUtils.AddItem();
+                    }
+                    else if (action == "update")
+                    {
+                        ConsoleUtils.UpdateItem();
+                    }
+                    else if (action == "delete")
+                    {
+                        ConsoleUtils.DeleteItem();
+                    }
+                    else
+                    {
+                        Console.WriteLine("You have entered an invalid action. Please try again.");
+                    }
+                }
+                else
+                {
+                    done = true;
+                }
+            }
         }
     }
 }

@@ -25,6 +25,35 @@ namespace ToDoList
         }
 
         //List all To Do Items
+        public static List<ToDoItem> ReviewToDoList(string filterType, string filterCriteria)
+        {
+            List<ToDoItem> ReviewToDoList = new List<ToDoItem>();
+            foreach (ToDoItem t in todoList.ToDoList) {
+                if(filterType == "" && filterCriteria == "")
+                {
+                    ReviewToDoList.Add(t);
+                }
+                else
+                {
+                    if(filterType == "status")
+                    {
+                        if(t.Status.ToLower() == filterCriteria)
+                        {
+                            ReviewToDoList.Add(t);
+                        }
+                    }
+                    else if (filterType == "priority")
+                    {
+                        if(t.Priority.ToLower() == filterCriteria)
+                        {
+                            ReviewToDoList.Add(t);
+                        }
+                    }
+                }
+                
+            }
+            return ReviewToDoList;
+        }
 
         public static void DeleteItem(string todoID) //funtional
         {
@@ -59,6 +88,19 @@ namespace ToDoList
 
             //ask the context to save any changes to the database
             todoList.SaveChanges();
+        }
+
+        public static List<ToDoItem> FilterList(string filterType, string filterCriteria)
+        {
+            List<ToDoItem> FilteredToDoList = new List<ToDoItem>();
+            foreach (ToDoItem t in todoList.ToDoList)
+            {
+                if(t.Status == filterType)
+                {
+                    FilteredToDoList.Add(t);
+                }
+            }
+            return FilteredToDoList;
         }
     }
 }

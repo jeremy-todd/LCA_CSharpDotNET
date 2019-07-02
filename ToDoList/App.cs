@@ -21,38 +21,16 @@ namespace ToDoList
 
         }
 
+        //instaniate an ItemRepository class
+        ItemRepository repository = new ItemRepository();
+
         //methods
-        public static string filterType = ""; //Not sure I will need this once I get the FilterItems method working
-        public static string filterCriteria = ""; //Not sure I will need this once I get the FilterItems method working
-
-        public static string UpdateItemApp(string todoID) //functional
+        public static List<ToDoItem> ReviewToDoList(string filterType, string filterCriteria)
         {
-            string input = "";
-            string desc = "";
-            string dueDate = "";
-            string status = "";
-            string priority = "";
-
-            while(input != "done")
-            {
-                ConsoleUtils.GetUpdatedItemAction();
-                if (input == "desc")
-                {
-                    desc = ConsoleUtils.GetUpdatedItemDesc();
-                }
-                else if (input == "due date")
-                {
-                    dueDate = ConsoleUtils.GetUpdatedItemDueDate();
-                }
-                else if (input == "status")
-                {
-                    status = ConsoleUtils.GetUpdatedItemStatus();
-                }
-                else if (input == "priority")
-                {
-                    priority = ConsoleUtils.GetUpdatedItemPriority();
-                }
-            }
+            return ItemRepository.ReviewToDoList(filterType, filterCriteria);
+        }
+        public static void UpdateItemApp(string todoID, string desc, string dueDate, string status, string priority) //functional
+        {
             ToDoItem UpdatedToDoItem = ItemRepository.GetUpdateItem(todoID);
 
             if (desc != "")
@@ -78,41 +56,9 @@ namespace ToDoList
         {
             ItemRepository.AddItem(desc, dueDate, status, priority);
         }
-        public static Tuple<string, string> FilterItems() //NOT FUNCTIONAL
+        public static void DeleteItemApp(string todoID)
         {
-            //Ask the user how they want to filter the items
-            Console.WriteLine("Do you want to filter by 'Status' or 'Priority'?");
-            filterType = Console.ReadLine().ToLower();
-            //what to do if the user wants to filter by status
-            #region Filter by Status
-            if (filterType.ToLower() == "status")
-            {
-                //ask the user which status they want to filter by
-                Console.WriteLine("Do you want to view 'Pending', 'In Progress', or 'Completed' items?");
-                filterCriteria = Console.ReadLine().ToLower();
-                return Tuple.Create(filterType, filterCriteria);
-            }
-            #endregion
-            #region Filter by Priority
-            else if (filterType.ToLower() == "priority")
-            {
-                //ask the user which priority they want to filter by
-                Console.WriteLine("Do you want to view 'Low', 'Normal', or 'High' priority items?");
-                filterCriteria = Console.ReadLine().ToLower();
-                return Tuple.Create(filterType, filterCriteria);
-            }
-            #endregion
-            else
-            {
-                filterCriteria = "";
-                filterType = "";
-                return Tuple.Create(filterType, filterCriteria);
-            }
-        }
-        public static void ResetFilter() //functional
-        {
-            filterType = "";
-            filterCriteria = "";
+            ItemRepository.DeleteItem(todoID);
         }
         public static string UserActionValidation(string action)
         {
