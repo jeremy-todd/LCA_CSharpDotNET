@@ -4,7 +4,7 @@ namespace ToDoList
 {
     class App
     {
-        //This class controls takes the user interactions and actually does stuff
+        //This class takes the user interactions and passes it to the ItemRepository class
 
         //Fields
         //No fields are needed for this class.
@@ -23,11 +23,11 @@ namespace ToDoList
         {
             return ItemRepository.ReviewToDoList(filterType, filterCriteria);
         }
-        public static void UpdateItemApp(string todoID, string desc, string dueDate, string status, string priority) //functional
+        public static void UpdateItemApp(string todoID, string desc, string dueDate, string status, string priority)
         {
             ItemRepository.UpdateItem(todoID, desc, dueDate, status, priority);
         }
-        public static void AddItemApp(string desc, string dueDate, string status, string priority) //functional
+        public static void AddItemApp(string desc, string dueDate, string status, string priority)
         {
             ItemRepository.AddItem(desc, dueDate, status, priority);
         }

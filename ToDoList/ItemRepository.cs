@@ -5,10 +5,8 @@ namespace ToDoList
 {
     class ItemRepository
     {
-        //I have no clue what goes in this class.
-        //Maybe we will cover this one in class today.
-        //If not, I will lose points on the checkpoint for not having anything in it.
-
+        //This class takes the user input from the App class and uses it to interact with the DB.
+        
         //instantiate an instance of the context
         public static ItemContext todoList = new ItemContext();
 
@@ -28,28 +26,23 @@ namespace ToDoList
             List<ToDoItem> ReviewToDoList = new List<ToDoItem>();
             if(filterType == "" && filterCriteria == "")
             {
-                foreach (ToDoItem t in todoList.ToDoList)
-                {
-                    ReviewToDoList.Add(t);
-                }
+                ReviewToDoList = todoList.ToDoList.ToList();
             }
             else
             {
                 if(filterType == "Status")
                 {
-                    //ReviewToDoList.Add(todoList.ToDoList.Where(x => x.Status == filterCriteria));
-                    todoList.ToDoList.Where(x => x.Status == filterCriteria);
+                    ReviewToDoList = todoList.ToDoList.Where(x => x.Status == filterCriteria).ToList();
                 }
                 else if (filterType == "Priority")
                 {
-                    //ReviewToDoList.Add(todoList.ToDoList.Where(x => x.Priority == filterCriteria));
-                    todoList.ToDoList.Where(x => x.Priority == filterCriteria);
+                    ReviewToDoList = todoList.ToDoList.Where(x => x.Priority == filterCriteria).ToList();
                 }
             }
             return ReviewToDoList;
         }
 
-        public static void DeleteItem(string todoID) //funtional
+        public static void DeleteItem(string todoID)
         {
             //if the to do list object ID is not CANCEL, delete the object from the context, otherwise do nothing.
             if (todoID != "CANCEL")
@@ -84,7 +77,7 @@ namespace ToDoList
             todoList.SaveChanges();
         }
 
-        public static void AddItem(string desc, string dueDate, string status, string priority) //functional
+        public static void AddItem(string desc, string dueDate, string status, string priority)
         {
             //call method to get the to do list object to add.
             //add the newly created to do object to the context.
@@ -93,19 +86,6 @@ namespace ToDoList
 
             //ask the context to save any changes to the database
             todoList.SaveChanges();
-        }
-
-        public static List<ToDoItem> FilterList(string filterType, string filterCriteria)
-        {
-            List<ToDoItem> FilteredToDoList = new List<ToDoItem>();
-            foreach (ToDoItem t in todoList.ToDoList)
-            {
-                if(t.Status == filterType)
-                {
-                    FilteredToDoList.Add(t);
-                }
-            }
-            return FilteredToDoList;
         }
     }
 }

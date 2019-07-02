@@ -7,7 +7,7 @@ namespace ToDoList
     class ConsoleUtils
     {
         //This class controls the displaying of the data
-        //All user input is also captured and returned using this class
+        //All user input is also captured and passed to the App class using this class
 
         //Fields
         //No fields are needed for this class.
@@ -22,7 +22,7 @@ namespace ToDoList
         public static string filterCriteria = "";
 
         //methods
-        public static void ReviewItems() //in testing
+        public static void ReviewItems()
         {
             List<ToDoItem> ReviewToDoList = new List<ToDoItem>();
             ReviewToDoList = App.ReviewToDoList(filterType, filterCriteria);
