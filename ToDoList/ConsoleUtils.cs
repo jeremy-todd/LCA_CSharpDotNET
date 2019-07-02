@@ -1,10 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using System.IO;
 
 namespace ToDoList
 {
@@ -22,8 +17,8 @@ namespace ToDoList
             
         }
 
-        public static string filterType = ""; //Not sure I will need this once I get the FilterItems method working
-        public static string filterCriteria = ""; //Not sure I will need this once I get the FilterItems method working
+        public static string filterType = "";
+        public static string filterCriteria = "";
 
         //methods
         public static void ReviewItems() //in testing
@@ -31,16 +26,16 @@ namespace ToDoList
             List<ToDoItem> ReviewToDoList = new List<ToDoItem>();
             ReviewToDoList = App.ReviewToDoList(filterType, filterCriteria);
             //Clear the console to keep it clean
-            //Console.Clear();
-            Console.WriteLine("ToDo (ID | Description | Due Date | Status | Priority)");
+            Console.Clear();
+            Console.WriteLine("ToDo List (ID | Description | Due Date | Status | Priority)");
             Console.WriteLine();
-            foreach (ToDoItem t in ReviewToDoList)  //not sure how to fix this. If I fix this error, it throws errors in Program.cs
+            foreach (ToDoItem t in ReviewToDoList)
             {
-                Console.WriteLine("   {0} - {1} | {2} | {3} | {4}", t.ID, t.Desc, t.DueDate, t.Status, t.Priority);                
+                Console.WriteLine("   {0} | {1} | {2} | {3} | {4}", t.ID, t.Desc, t.DueDate, t.Status, t.Priority);                
             }
             Console.WriteLine();
         }
-        public static void AddItem() //functional
+        public static void AddItem()
         {
             Console.WriteLine("Please enter the desciption of the ToDo Item.");
             string desc = Console.ReadLine();
@@ -53,7 +48,7 @@ namespace ToDoList
 
             App.AddItemApp(desc, dueDate, status, priority);
         }
-        public static void UpdateItem() //functional
+        public static void UpdateItem()
         {
             //ask which item the user wishes to update
             Console.WriteLine("Enter the ID of the item to update.");
@@ -92,7 +87,7 @@ namespace ToDoList
             }
             App.UpdateItemApp(todoID, desc, dueDate, status, priority);
         }
-        public static void DeleteItem() //functional
+        public static void DeleteItem()
         {
             string verify = "NO";
             string todoID = "CANCEL";
@@ -111,7 +106,7 @@ namespace ToDoList
             }
             App.DeleteItemApp(todoID);
         }
-        public static void FilterList() //in testing
+        public static void FilterList()
         {
             //Ask the user how they want to filter the items
             Console.WriteLine("Do you want to filter by 'Status' or 'Priority'?");
@@ -137,13 +132,13 @@ namespace ToDoList
 
             App.ReviewToDoList(filterType, filterCriteria);
         }
-        public static void ResetFilter() //in testing
+        public static void ResetFilter()
         {
             filterType = "";
             filterCriteria = "";
             App.ReviewToDoList(filterType, filterCriteria);
         }
-        public static void UserInput() //in testing
+        public static void UserInput()
         {
             //variable to determine when the user is done interacting with the To Do List
             bool done = false;
