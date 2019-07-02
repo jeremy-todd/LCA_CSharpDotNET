@@ -10,65 +10,75 @@ namespace ToDoList
 {
     class App
     {
-        //This class controls the user interactions
+        //This class controls takes the user interactions and actually does stuff
 
         //Fields
-        //I am not sure this class needs fields
+        //No fields are needed for this class.
 
-        //Controller
+        //Controller(s)
         public App()
         {
 
         }
 
         //methods
-        public static string filterType = "";
-        public static string filterCriteria = "";
+        public static string filterType = ""; //Not sure I will need this once I get the FilterItems method working
+        public static string filterCriteria = ""; //Not sure I will need this once I get the FilterItems method working
 
-        public static void DeleteItems(ItemContext todoList)
+        public static string UpdateItemApp(string todoID) //functional
         {
-            string verify = "NO";
-            string todoID = "";
-            while (verify == "NO")
+            string input = "";
+            string desc = "";
+            string dueDate = "";
+            string status = "";
+            string priority = "";
+
+            while(input != "done")
             {
-                //ask which item the user wishes to delete
-                Console.WriteLine("Enter the ID of the item to delete or type 'CANCEL'.");
-                todoID = Console.ReadLine();
-                if (todoID == "CANCEL")
+                ConsoleUtils.GetUpdatedItemAction();
+                if (input == "desc")
                 {
-                    break;
+                    desc = ConsoleUtils.GetUpdatedItemDesc();
                 }
-                Console.WriteLine("You have chosen to delete item " + todoID + ".");
-                Console.WriteLine("Is the correct? YES or NO?");
-                verify = Console.ReadLine();
+                else if (input == "due date")
+                {
+                    dueDate = ConsoleUtils.GetUpdatedItemDueDate();
+                }
+                else if (input == "status")
+                {
+                    status = ConsoleUtils.GetUpdatedItemStatus();
+                }
+                else if (input == "priority")
+                {
+                    priority = ConsoleUtils.GetUpdatedItemPriority();
+                }
             }
-            if (todoID != "CANCEL")
-            {
-                ToDoItem DeleteItem = todoList.ToDoList.Where(x => x.ID == int.Parse(todoID)).FirstOrDefault();
-                todoList.Remove(DeleteItem);
-                todoList.SaveChanges();
-            }
-        }
-        public static void UpdateItems(ItemContext todoList)
-        {
-            //ask which item the user wishes to update
-            Console.WriteLine("Enter the ID of the item to update.");
-            string todoID = Console.ReadLine();
-            ToDoItem UpdatedToDoItem = todoList.ToDoList.Where(x => x.ID == int.Parse(todoID)).FirstOrDefault();
-            Update(UpdatedToDoItem);
-            todoList.SaveChanges();
-        }
-        public static void AddItems(ItemContext todoList)
-        {
-            //call method to get the book object to add.
-            //add the newly created book instance to the context.
-            //notice how similar this is to adding an item to a list.
-            Add();
+            ToDoItem UpdatedToDoItem = ItemRepository.GetUpdateItem(todoID);
 
-            //ask the context to save any changes to the database
-            todoList.SaveChanges();
+            if (desc != "")
+            {
+                UpdatedToDoItem.Desc = desc;
+            }
+            if (dueDate != "")
+            {
+                UpdatedToDoItem.DueDate = dueDate;
+            }
+            if (status != "")
+            {
+                UpdatedToDoItem.Status = status;
+            }
+            if (priority != "")
+            {
+                UpdatedToDoItem.Priority = priority;
+            }
+
+            ItemRepository.UpdateItem(UpdatedToDoItem);
         }
-        public static Tuple<string, string> FilterItems()
+        public static void AddItemApp(string desc, string dueDate, string status, string priority) //functional
+        {
+            ItemRepository.AddItem(desc, dueDate, status, priority);
+        }
+        public static Tuple<string, string> FilterItems() //NOT FUNCTIONAL
         {
             //Ask the user how they want to filter the items
             Console.WriteLine("Do you want to filter by 'Status' or 'Priority'?");
@@ -99,75 +109,44 @@ namespace ToDoList
                 return Tuple.Create(filterType, filterCriteria);
             }
         }
-        public static ToDoItem Update(ToDoItem UpdatedToDoItem)
+        public static void ResetFilter() //functional
         {
-            bool done = false;
-            string desc = "";
-            string dueDate = "";
-            string status = "";
-            string priority = "";
-            while (!done)
-            {
-                Console.WriteLine("What do you need to update('desc', 'due date', 'status', 'priority')?");
-                Console.WriteLine("Type 'done' when finished.");
-                string input = Console.ReadLine().ToLower();
-                if (input == "desc")
-                {
-                    Console.WriteLine("Please enter the updated desciption of the item.");
-                    desc = Console.ReadLine();
-                }
-                else if (input == "due date")
-                {
-                    Console.WriteLine("Enter the updated due date of the item (MM/DD/YYY).");
-                    dueDate = Console.ReadLine();
-                }
-                else if (input == "status")
-                {
-                    Console.WriteLine("Enter the updated status of the item (Pending, In Progress, Completed).");
-                    status = Console.ReadLine();
-                }
-                else if (input == "priority")
-                {
-                    Console.WriteLine("Enter the item's updated priority ('Low', 'Normal', 'High').");
-                    priority = Console.ReadLine();
-                }
-                else if (input == "done")
-                {
-                    done = true;
-                }
-            }
-            if (desc != "")
-            {
-                UpdatedToDoItem.Desc = desc;
-            }
-            if (dueDate != "")
-            {
-                UpdatedToDoItem.DueDate = dueDate;
-            }
-            if (status != "")
-            {
-                UpdatedToDoItem.Status = status;
-            }
-            if (priority != "")
-            {
-                UpdatedToDoItem.Priority = priority;
-            }
-
-            return UpdatedToDoItem;
+            filterType = "";
+            filterCriteria = "";
         }
-        public static ToDoItem Add()
+        public static string UserActionValidation(string action)
         {
-            Console.WriteLine("Please enter the desciption of the ToDo Item.");
-            string desc = Console.ReadLine();
-            Console.WriteLine("Enter the item's due date (MM/DD/YYYY).");
-            string dueDate = Console.ReadLine();
-            Console.WriteLine("Enter the item's status (pending, in progress, completed).");
-            string status = Console.ReadLine();
-            Console.WriteLine("Enter the item's priority (low, normal, high).");
-            string priority = Console.ReadLine();
 
-            ToDoItem newToDoItem = new ToDoItem(desc, dueDate, status, priority);
-            return newToDoItem;
+            string valid = "";
+            if (action == "done")
+            {
+                valid = "";
+            }
+            else if (action == "filter")
+            {
+                valid = "";
+            }
+            else if (action == "reset")
+            {
+                valid = "";
+            }
+            else if (action == "add")
+            {
+                valid = "";
+            }
+            else if (action == "update")
+            {
+                valid = "";
+            }
+            else if (action == "delete")
+            {
+                valid = "";
+            }
+            else
+            {
+                valid = "You entered an invalid action. Please try again.";
+            }
+            return valid;
         }
     }
 }

@@ -22,56 +22,37 @@ namespace ToDoList
             //instantiate an instance of the context
             ItemContext todoList = new ItemContext();
 
-            //instantiate an instance of ConsoleUtils class
-            ConsoleUtils consoleUtils = new ConsoleUtils();
-
-            //instaniate an instance of App class
-            App app = new App();
-
             //make sure that the table exists, and create it if it does not already exist.
             todoList.Database.EnsureCreated();
 
             while (!done)
             {
                 //ask the user what they want to do
-                ConsoleUtils.ReviewToDoList(filterType, filterCriteria);
-                Console.WriteLine("Do you want to 'filter' the items, 'reset' the filters, 'add' an item, 'update' an item, or 'delete' an item?");
-                Console.WriteLine("Type 'done' when finished.");
-                string action = Console.ReadLine().ToLower();
+                ConsoleUtils.ReviewItems(todoList, filterType, filterCriteria);
+                string action = ConsoleUtils.UserInput();
 
                 if (action != "done")
                 {
-                    #region Filter
                     if (action == "filter")
                     {
                         App.FilterItems();
                     }
-                    #endregion
-                    #region Reset
                     else if (action == "reset")
                     {
-                        filterType = "";
-                        filterCriteria = "";
+                        App.ResetFilter();
                     }
-                    #endregion
-                    #region Add
                     else if (action == "add")
                     {
-                        App.AddItems(todoList);
+                        App.AddItem(todoList);
                     }
-                    #endregion
-                    #region Update
                     else if (action == "update")
                     {
-                        App.UpdateItems(todoList);
+                        App.UpdateItem(todoList);
                     }
-                    #endregion
-                    #region Delete
                     else if (action == "delete")
                     {
-                        App.DeleteItems(todoList);
+                        App.DeleteItem(todoList);
                     }
-                    #endregion
                 }
                 else
                 {
