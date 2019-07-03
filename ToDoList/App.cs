@@ -16,7 +16,7 @@ namespace ToDoList
         }
 
         //instaniate an ItemRepository class
-        ItemRepository repository = new ItemRepository();
+        //ItemRepository repository = new ItemRepository();
 
         //methods
         public static List<ToDoItem> ReviewToDoList(string filterType, string filterCriteria)

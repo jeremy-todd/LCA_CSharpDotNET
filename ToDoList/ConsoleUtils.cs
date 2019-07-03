@@ -42,10 +42,10 @@ namespace ToDoList
             string desc = Console.ReadLine();
             Console.WriteLine("Enter the item's due date (MM/DD/YYYY).");
             string dueDate = Console.ReadLine();
-            Console.WriteLine("Enter the item's status (pending, in progress, completed).");
+            Console.WriteLine("Enter the item's status (Pending, In Progress, Completed).");
             string Status = Console.ReadLine();
             string status = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(Status);
-            Console.WriteLine("Enter the item's priority (low, normal, high).");
+            Console.WriteLine("Enter the item's priority (Low, Normal, High).");
             string Priority = Console.ReadLine();
             string priority = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(Priority);
 
@@ -166,23 +166,23 @@ namespace ToDoList
                 {
                     if (action == "Filter")
                     {
-                        ConsoleUtils.FilterList();
+                        FilterList();
                     }
                     else if (action == "Reset")
                     {
-                        ConsoleUtils.ResetFilter();
+                        ResetFilter();
                     }
                     else if (action == "Add")
                     {
-                        ConsoleUtils.AddItem();
+                        AddItem();
                     }
                     else if (action == "Update")
                     {
-                        ConsoleUtils.UpdateItem();
+                        UpdateItem();
                     }
                     else if (action == "Delete")
                     {
-                        ConsoleUtils.DeleteItem();
+                        DeleteItem();
                     }
                     else
                     {
