@@ -35,5 +35,9 @@ namespace ToDoList
         {
             ItemRepository.DeleteItem(todoID);
         }
+        public static bool ToDoIDVerifyApp(string todoID)
+        {
+            return ItemRepository.ToDoIDVerify(todoID);
+        }
     }
 }
