@@ -16,7 +16,7 @@ namespace ToDoList
         }
 
         //instaniate an ItemRepository class
-        ItemRepository repository = new ItemRepository();
+        //ItemRepository repository = new ItemRepository();
 
         //methods
         public static List<ToDoItem> ReviewToDoList(string filterType, string filterCriteria)
@@ -35,39 +35,9 @@ namespace ToDoList
         {
             ItemRepository.DeleteItem(todoID);
         }
-        public static string UserActionValidation(string action)
+        public static bool ToDoIDVerifyApp(string todoID)
         {
-
-            string valid = "";
-            if (action == "done")
-            {
-                valid = "";
-            }
-            else if (action == "filter")
-            {
-                valid = "";
-            }
-            else if (action == "reset")
-            {
-                valid = "";
-            }
-            else if (action == "add")
-            {
-                valid = "";
-            }
-            else if (action == "update")
-            {
-                valid = "";
-            }
-            else if (action == "delete")
-            {
-                valid = "";
-            }
-            else
-            {
-                valid = "You entered an invalid action. Please try again.";
-            }
-            return valid;
+            return ItemRepository.ToDoIDVerify(todoID);
         }
     }
 }
