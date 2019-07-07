@@ -149,5 +149,11 @@ namespace ToDoList
             string action = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(Action);
             return action;
         }
+        public static void BadStatus()
+        {
+            Console.WriteLine();
+            Console.WriteLine("You have entered an invalid status. Please try again.");
+            Console.WriteLine();
+        }
     }
 }
