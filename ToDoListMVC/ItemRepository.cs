@@ -87,5 +87,11 @@ namespace ToDoList
             //ask the context to save any changes to the database
             todoList.SaveChanges();
         }
+
+        public static bool ToDoIDVerify(int todoID)
+        {
+            bool verifyID = todoList.ToDoList.Any(x => x.ID == todoID);
+            return verifyID;
+        }
     }
 }

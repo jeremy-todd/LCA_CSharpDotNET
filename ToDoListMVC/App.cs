@@ -26,134 +26,201 @@ namespace ToDoList
             bool filterTypeValid = false;
             string filterCriteria = "";
             bool filterCriteriaValid = false;
+            bool verifyValid = false;
             string desc = "";
             string dueDate = "";
             string status = "";
-            bool statusValid = false;
             string priority = "";
-            bool priorityValid = false;
-            int todoIDint;
+            int todoIDint = 0;
             string todoIDstring = "CANCEL";
-            List<ToDoItem> ReviewToDoList = ItemRepository.ReviewToDoList(filterType, filterCriteria);
-
+            
             while (!done)
             {
+                string action = "";
+                List<ToDoItem> ReviewToDoList = ItemRepository.ReviewToDoList(filterType, filterCriteria);
                 //ask the user what they want to do
                 ConsoleUtils.ReviewItems(ReviewToDoList);
-                bool finished = false;
-                while(!finished)
+                bool actionValid = false;
+                while (!actionValid)
                 {
-                    string action = ConsoleUtils.GetUserInput();
-
-                    if (action != "Done")
+                    action = ConsoleUtils.GetUserInput();
+                    actionValid = ActionValidate(action);
+                    if(actionValid == false)
                     {
-                        if (action == "Filter")
+                        ConsoleUtils.BadAction();
+                    }
+                }
+                if (action == "Filter")
+                {
+                    while (!filterTypeValid)
+                    {
+                        filterType = ConsoleUtils.GetFilterType(); //Get user input for filter type
+                        filterTypeValid = FilterTypeValidate(filterType); //Validate user input for filter type
+                        if(filterTypeValid == false)
                         {
-                            while (!filterTypeValid)
-                            {
-                                filterType = ConsoleUtils.GetFilterType(); //Get user input for filter type
-                                filterTypeValid = FilterTypeValidate(filterType); //Validate user input for filter type
-                            }
-                            while (!filterCriteriaValid)
-                            {
-                                filterCriteria = ConsoleUtils.GetFilterCriteria(filterType); //Get user input for filter criteria
-                                filterCriteriaValid = FilterCriteriaValidate(filterType, filterCriteria); //Validate user input for filter criteria
-                            }
-                            ItemRepository.ReviewToDoList(filterType, filterCriteria);
-                            finished = true;
+                            ConsoleUtils.BadFilterType();
                         }
-                        else if (action == "Reset")
+                    }
+                    while (!filterCriteriaValid)
+                    {
+                        filterCriteria = ConsoleUtils.GetFilterCriteria(filterType); //Get user input for filter criteria
+                        filterCriteriaValid = FilterCriteriaValidate(filterType, filterCriteria); //Validate user input for filter criteria
+                        if(filterCriteriaValid == false)
                         {
-                            filterType = "";
-                            filterCriteria = "";
-                            ItemRepository.ReviewToDoList(filterType, filterCriteria);
-                            finished = true;
+                            ConsoleUtils.BadFilterCriteria();
                         }
-                        else if (action == "Add")
+                    }
+                    ItemRepository.ReviewToDoList(filterType, filterCriteria);
+                }
+                else if (action == "Reset")
+                {
+                    filterType = "";
+                    filterCriteria = "";
+                    ItemRepository.ReviewToDoList(filterType, filterCriteria);
+                }
+                else if (action == "Add")
+                {
+                    bool goodStatus = false;
+                    bool goodPriority = false;
+                    desc = ConsoleUtils.GetDescription(false);
+                    dueDate = ConsoleUtils.GetDueDate(false);
+                    while (!goodStatus)
+                    {
+                        status = ConsoleUtils.GetStatus(false);
+                        goodStatus = StatusValidate(status);
+                        if(goodStatus == false)
                         {
-                            desc = ConsoleUtils.GetDescription(false);
-                            dueDate = ConsoleUtils.GetDueDate(false);
-                            while (!statusValid)
-                            {
-                                status = ConsoleUtils.GetStatus(false);
-                                statusValid = StatusValidate(status);
-                            }
-                            while (!priorityValid)
-                            {
-                                priority = ConsoleUtils.GetPriority(false);
-                                priorityValid = PriorityValidate(priority);
-                            }
-                            ItemRepository.AddItem(desc, dueDate, status, priority);
-                            finished = true;
+                            ConsoleUtils.BadStatus();
                         }
-                        else if (action == "Update")
+                    }
+                    while (!goodPriority)
+                    {
+                        priority = ConsoleUtils.GetPriority(false);
+                        goodPriority = PriorityValidate(priority);
+                        if(goodPriority == false)
                         {
-                            todoIDint = int.Parse(ConsoleUtils.GetToDoID("update"));
-                            string input = "";
-                            while (input != "done")
-                            {
-                                input = ConsoleUtils.GetUpdateAction();
-                                if (input == "desc")
-                                {
-                                    desc = ConsoleUtils.GetDescription(true);
-                                }
-                                else if (action == "duedate")
-                                {
-                                    dueDate = ConsoleUtils.GetDueDate(true);
-                                }
-                                else if (action == "status")
-                                {
-                                    while (!statusValid)
-                                    {
-                                        status = ConsoleUtils.GetStatus(true);
-                                        statusValid = StatusValidate(status);
-                                        if(statusValid == false)
-                                        {
-                                            ConsoleUtils.BadStatus();
-                                        }
-                                    }
-                                }
-                                else if (action == "priority")
-                                {
-                                    while (!priorityValid)
-                                    {
-                                        priority = ConsoleUtils.GetPriority(true);
-                                        priorityValid = PriorityValidate(priority);
-                                    }
-                                }
-                            }
-                            ItemRepository.UpdateItem(todoIDint, desc, dueDate, status, priority);
-                            finished = true;
+                            ConsoleUtils.BadPriority();
                         }
-                        else if (action == "Delete")
+                    }
+                    ItemRepository.AddItem(desc, dueDate, status, priority);
+                }
+                else if (action == "Update")
+                {
+                    bool goodToDoID = false;
+                    bool goodStatus = false;
+                    bool goodPriority = false;
+                    while(!goodToDoID)
+                    {
+                        todoIDint = int.Parse(ConsoleUtils.GetToDoID(action));
+                        bool goodID = ItemRepository.ToDoIDVerify(todoIDint);
+                        if(goodID == true)
                         {
-                            string verify = "NO";
-                            while (verify == "NO")
-                            {
-                                //ask which item the user wishes to delete
-                                todoIDstring = ConsoleUtils.GetToDoID("delete");
-                                if (todoIDstring == "CANCEL")
-                                {
-                                    break;
-                                }
-                                verify = ConsoleUtils.DeleteVerifySelection(todoIDstring);
-                            }
-                            ItemRepository.DeleteItem(todoIDstring);
-                            finished = true;
+                            goodToDoID = true;
                         }
                         else
                         {
-                            Console.WriteLine("You have entered an invalid action. Please try again.");
+                            ConsoleUtils.BadID();
                         }
                     }
-                    else
+                    string input = "";
+                    while (input != "done")
                     {
-                        done = true;
-                        finished = true;
+                        input = ConsoleUtils.GetUpdateAction();
+                        if (input == "desc")
+                        {
+                            desc = ConsoleUtils.GetDescription(true);
+                        }
+                        else if (input == "duedate")
+                        {
+                            dueDate = ConsoleUtils.GetDueDate(true);
+                        }
+                        else if (input == "status")
+                        {
+                            while (!goodStatus)
+                            {
+                                status = ConsoleUtils.GetStatus(true);
+                                goodStatus = StatusValidate(status);
+                                if(goodStatus == false)
+                                {
+                                    ConsoleUtils.BadStatus();
+                                }
+                            }
+                        }
+                        else if (input == "priority")
+                        {
+                            while (!goodPriority)
+                            {
+                                priority = ConsoleUtils.GetPriority(true);
+                                goodPriority = PriorityValidate(priority);
+                                if(goodPriority == false)
+                                {
+                                    ConsoleUtils.BadPriority();
+                                }
+                            }
+                        }
                     }
+                    ItemRepository.UpdateItem(todoIDint, desc, dueDate, status, priority);
+                }
+                else if (action == "Delete")
+                {
+                    
+                    bool goodToDoID = false;
+                    string verify = "no";
+                    while(!goodToDoID)
+                    {
+                        //Get ID of item to delete
+                        todoIDstring = ConsoleUtils.GetToDoID(action);
+
+                        //Verify ID is valid
+                        bool goodID = false;
+                        if(todoIDstring != "CANCEL")
+                        {
+                            goodID = ItemRepository.ToDoIDVerify(int.Parse(todoIDstring));
+                            if(goodID == false)
+                            {
+                                ConsoleUtils.BadID();
+                            }
+                        }
+                        else if (todoIDstring == "")
+                        {
+                            ConsoleUtils.BadID();
+                        }
+                        else
+                        {
+                            break;
+                        }
+                        //Verify ID is the one the user actually wants to delete
+                        if (goodID == true && todoIDstring != "CANCEL")
+                        {
+                            verify = ConsoleUtils.DeleteVerifySelection(todoIDstring);
+                            verifyValid = VerifyValidate(verify);
+                            if(verifyValid == true)
+                            {
+                                if (verify.ToLower() == "yes")
+                                {
+                                    goodToDoID = true;
+                                }
+                            }
+                            else
+                            {
+                                ConsoleUtils.BadVerify();
+                            }
+                        }
+                    }
+
+                    //Delete the item
+                    if(verify.ToLower() == "yes")
+                    {
+                        ItemRepository.DeleteItem(todoIDstring);
+                    }
+                }
+                else if(action == "Done")
+                {
+                    done = true;
                 }
             }
         }
+
         //User Input Validation Methods
         public static bool FilterTypeValidate(string filterType)
         {
@@ -198,6 +265,32 @@ namespace ToDoList
         {
             bool valid = false;
             if (priority.ToLower() == "low" || priority.ToLower() == "normal" || priority.ToLower() == "high")
+            {
+                valid = true;
+            }
+            else
+            {
+                valid = false;
+            }
+            return valid;
+        }
+        public static bool VerifyValidate(string verify)
+        {
+            bool valid = false;
+            if(verify.ToLower() == "yes" || verify.ToLower() == "no")
+            {
+                valid = true;
+            }
+            else
+            {
+                valid = false;
+            }
+            return valid;
+        }
+        public static bool ActionValidate(string action)
+        {
+            bool valid = false;
+            if(action.ToLower() == "done" || action.ToLower() == "filter" || action.ToLower() == "reset" || action.ToLower() == "add" || action.ToLower() == "update" || action.ToLower() == "delete")
             {
                 valid = true;
             }

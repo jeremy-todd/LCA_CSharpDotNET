@@ -87,11 +87,11 @@ namespace ToDoList
         }
         public static string GetToDoID(string option)
         {
-            if (option == "update")
+            if (option.ToLower() == "update")
             {
                 Console.WriteLine("Enter the ID of the item to update.");
             }
-            else if (option == "delete")
+            else if (option.ToLower() == "delete")
             {
                 Console.WriteLine("Enter the ID of the item to delete.");
             }
@@ -149,10 +149,46 @@ namespace ToDoList
             string action = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(Action);
             return action;
         }
+        public static void BadID()
+        {
+            Console.WriteLine();
+            Console.WriteLine("You entered an invalid ID. Please try again.");
+            Console.WriteLine();
+        }
         public static void BadStatus()
         {
             Console.WriteLine();
             Console.WriteLine("You have entered an invalid status. Please try again.");
+            Console.WriteLine();
+        }
+        public static void BadPriority()
+        {
+            Console.WriteLine();
+            Console.WriteLine("You entered an invalid priority. Please try again.");
+            Console.WriteLine();
+        }
+        public static void BadFilterType()
+        {
+            Console.WriteLine();
+            Console.WriteLine("You entered an invalid filter type. Please try again.");
+            Console.WriteLine();
+        }
+        public static void BadFilterCriteria()
+        {
+            Console.WriteLine();
+            Console.WriteLine("You entered an invalid filter criteria. Please try again.");
+            Console.WriteLine();
+        }
+        public static void BadAction()
+        {
+            Console.WriteLine();
+            Console.WriteLine("You entered an invalid action. Please try again.");
+            Console.WriteLine();
+        }
+        public static void BadVerify()
+        {
+            Console.WriteLine();
+            Console.WriteLine("Please enter 'YES' or 'NO'.");
             Console.WriteLine();
         }
     }
