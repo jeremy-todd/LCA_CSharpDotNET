@@ -9,7 +9,7 @@ namespace MyFirstAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ValuesController : ControllerBase
+    public class PeopleController : ControllerBase
     {
         private static readonly List<Person> _people = new List<Person>
         {
@@ -46,7 +46,6 @@ namespace MyFirstAPI.Controllers
         // POST api/values
 
         [HttpPost]
-        [Produces("application/json")]
         public IActionResult Post([FromBody] Person newPerson)
         {
             _people.Add(newPerson);
